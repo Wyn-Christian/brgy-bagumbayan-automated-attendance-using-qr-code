@@ -24,12 +24,10 @@ export default function AdminAttendanceEditView() {
 						name: 'Attendance',
 						href: paths.admin.attendance.list
 					},
-					{
-						name: 'Edit'
-					}
+					{ name: 'Edit' }
 				]}
-				sx={{ my: 5 }}
-			/>
+				sx={{ mb: { xs: 3, md: 5 } }}
+				/>
 			<Typography>test</Typography>
 		</>
 	)

@@ -22,21 +22,19 @@ export default function AdminAttendanceDetailsView() {
 						}
 					}
 				}}
-			links={[
-				{
-					name: 'Dashboard',
-					href: paths.admin.dashboard
-				},
-				{
-					name: 'Attendance',
-					href: paths.admin.attendance.list
-				},
-				{
-					name: 'Details'
-				}
-			]}
-			sx={{ my: 5 }}
-			/>
+				links={[
+					{
+						name: 'Dashboard',
+						href: paths.admin.dashboard
+					},
+					{
+						name: 'Attendance',
+						href: paths.admin.attendance.list
+					},
+					{ name: 'Details' }
+				]}
+				sx={{ mb: { xs: 3, md: 5 } }}
+				/>
 			<Typography>test</Typography>
 		</>
 	)

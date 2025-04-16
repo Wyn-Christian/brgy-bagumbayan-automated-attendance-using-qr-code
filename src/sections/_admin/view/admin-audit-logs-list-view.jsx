@@ -23,12 +23,10 @@ export default function AdminAuditLogsListView() {
 						name: 'Audit logs',
 						href: paths.admin.auditLogs.list
 					},
-					{
-						name: 'List'
-					}
+					{ name: 'List' }
 				]}
-				sx={{ my: 5 }}
-			/>
+				sx={{ mb: { xs: 3, md: 5 } }}
+				/>
 			<Typography>test</Typography>
 		</>
 	)

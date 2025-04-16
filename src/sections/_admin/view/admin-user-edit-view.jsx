@@ -24,11 +24,9 @@ export default function AdminUserEditView() {
 						name: 'User',
 						href: paths.admin.user.list
 					},
-					{
-						name: 'Edit'
-					}
+					{ name: 'Edit' }
 				]}
-				sx={{ my: 5 }}
+				sx={{ mb: { xs: 3, md: 5 } }}
 			/>
 			<Typography>test</Typography>
 		</>

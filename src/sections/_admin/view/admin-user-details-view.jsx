@@ -24,12 +24,10 @@ export default function AdminUserDetailsView() {
 						name: 'User',
 						href: paths.admin.user.list
 					},
-					{
-						name: 'Details'
-					}
+					{ name: 'Details' }
 				]}
-				sx={{ my: 5 }}
-			/>
+				sx={{ mb: { xs: 3, md: 5 } }}
+				/>
 			<Typography>test</Typography>
 		</>
 	)

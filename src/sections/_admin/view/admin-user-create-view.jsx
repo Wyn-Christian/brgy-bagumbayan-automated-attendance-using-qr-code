@@ -23,12 +23,10 @@ export default function AdminUserCreateView() {
 						name: 'User',
 						href: paths.admin.user.list
 					},
-					{
-						name: 'Create'
-					}
+					{ name: 'Create' }
 				]}
-				sx={{ my: 5 }}
-			/>
+				sx={{ mb: { xs: 3, md: 5 } }}
+				/>
 			<Typography>test</Typography>
 		</>
 	)
