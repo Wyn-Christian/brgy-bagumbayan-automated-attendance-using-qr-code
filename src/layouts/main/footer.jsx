@@ -15,7 +15,7 @@ import Button, { buttonClasses } from '@mui/material/Button';
 import { usePathname } from 'src/routes/hooks';
 import { RouterLink } from 'src/routes/components';
 
-import { _socials } from 'src/_mock';
+// import { _socials } from 'src/_mock';
 
 import { Logo } from 'src/components/logo';
 import { Iconify } from 'src/components/iconify';
@@ -91,14 +91,14 @@ export function Footer({ layoutQuery = 'md', sx, ...other }) {
       <Typography variant="h6">Social</Typography>
 
       <Box sx={{ display: 'flex' }}>
-        {_socials.map((social) => (
+        {/* {_socials.map((social) => (
           <IconButton key={social.label}>
             {social.value === 'twitter' && <Iconify icon="socials:twitter" />}
             {social.value === 'facebook' && <Iconify icon="socials:facebook" />}
             {social.value === 'instagram' && <Iconify icon="socials:instagram" />}
             {social.value === 'linkedin' && <Iconify icon="socials:linkedin" />}
           </IconButton>
-        ))}
+        ))} */}
       </Box>
     </>
   );

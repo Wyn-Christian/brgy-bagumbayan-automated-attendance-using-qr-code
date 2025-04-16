@@ -1,6 +1,6 @@
 import { paths } from 'src/routes/paths';
 
-import { _caseStudies } from 'src/_mock';
+// import { _caseStudies } from 'src/_mock';
 import { CONFIG } from 'src/global-config';
 
 // ----------------------------------------------------------------------
@@ -15,7 +15,7 @@ export const pageLinks = [
       { title: 'Landing', path: paths.marketing.root },
       { title: 'Services', path: paths.marketing.services },
       { title: 'Case studies', path: paths.marketing.caseStudies },
-      { title: 'Case study', path: paths.marketing.caseStudy(_caseStudies[0].id) },
+      // { title: 'Case study', path: paths.marketing.caseStudy(_caseStudies[0].id) },
       { title: 'Posts', path: paths.marketing.posts },
       { title: 'Post', path: paths.marketing.post },
       { title: 'About', path: paths.marketing.about },
