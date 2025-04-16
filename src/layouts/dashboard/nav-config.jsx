@@ -70,6 +70,18 @@ export const NAV_ADMIN_DATA = [
 				title: 'Audit Logs',
 				path: '/admin/audit-logs',
 				icon: <Iconify icon="line-md:clipboard-list" />,
+				children: [
+					{
+						title: 'List',
+						path: '/admin/audit-logs/list',
+						icon: <Iconify icon="line-md:list" />,
+					},
+					{
+						title: 'Detail',
+						path: '/admin/audit-logs/123123',
+						icon: <Iconify icon="line-md:text-box" />,
+					},
+				],
 			},
 
 		]

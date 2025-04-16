@@ -8,7 +8,6 @@ import { styled } from '@mui/material/styles';
 import TextField from '@mui/material/TextField';
 import Container from '@mui/material/Container';
 import Typography from '@mui/material/Typography';
-import IconButton from '@mui/material/IconButton';
 import InputAdornment from '@mui/material/InputAdornment';
 import Button, { buttonClasses } from '@mui/material/Button';
 
@@ -82,23 +81,6 @@ export function Footer({ layoutQuery = 'md', sx, ...other }) {
           },
         }}
       />
-    </>
-  );
-
-  const renderSocials = () => (
-    <>
-      <Typography variant="h6">Social</Typography>
-
-      <Box sx={{ display: 'flex' }}>
-        {/* {_socials.map((social) => (
-          <IconButton key={social.label}>
-            {social.value === 'twitter' && <Iconify icon="socials:twitter" />}
-            {social.value === 'facebook' && <Iconify icon="socials:facebook" />}
-            {social.value === 'instagram' && <Iconify icon="socials:instagram" />}
-            {social.value === 'linkedin' && <Iconify icon="socials:linkedin" />}
-          </IconButton>
-        ))} */}
-      </Box>
     </>
   );
 
@@ -203,7 +185,6 @@ export function Footer({ layoutQuery = 'md', sx, ...other }) {
 
           <Box sx={[(theme) => ({ ...blockStyles(theme, layoutQuery) })]}>{renderSubscribe()}</Box>
 
-          <Box sx={[(theme) => ({ ...blockStyles(theme, layoutQuery) })]}>{renderSocials()}</Box>
 
           <Box sx={[(theme) => ({ ...blockStyles(theme, layoutQuery) })]}>{renderApps()}</Box>
         </Grid>

@@ -12,5 +12,8 @@ export function layoutSectionVars(theme) {
     '--layout-transition-duration': '120ms',
     '--layout-nav-mini-width': '88px',
     '--layout-transition-easing': 'linear',
+    '--layout-dashboard-content-pt': 'var(--spacing)',
+    '--layout-dashboard-content-pb': 'calc(8 * var(--spacing))',
+    '--layout-dashboard-content-px': 'calc(5 * var(--spacing))',
   };
 }

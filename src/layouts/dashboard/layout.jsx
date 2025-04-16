@@ -6,6 +6,7 @@ import { varAlpha, mergeClasses } from 'minimal-shared/utils';
 import Box from '@mui/material/Box';
 import Drawer from '@mui/material/Drawer';
 import { styled } from '@mui/material/styles';
+import Container from '@mui/material/Container';
 
 import { Logo } from 'src/components/logo';
 import { Scrollbar } from 'src/components/scrollbar';
@@ -107,9 +108,11 @@ export function DashboardLayout({ sx, cssVars, children, slotProps, layoutQuery 
 
 	const renderMain = () => (
 		<SidebarContainerSection>
-			<MainSection {...slotProps?.main}>
-				{children}
-			</MainSection>
+			<MainContentWrapper>
+				<MainSection {...slotProps?.main}>
+					{children}
+				</MainSection>
+			</MainContentWrapper>
 		</SidebarContainerSection>
 	)
 
@@ -164,4 +167,22 @@ let NavWrapper = styled((props) => (
 	borderRight: `1px solid ${varAlpha('var(--palette-grey-500Channel)', 0.12)}`,
 	transition: 'width var(--layout-transition-duration) var(--layout-transition-easing) 0ms',
 	[theme.breakpoints.down(layoutQuery)]: { display: 'none' },
+}))
+
+let MainContentWrapper = styled((props) => (
+	<Container maxWidth='lg' {...props}
+		className={mergeClasses([layoutClasses.content, props.className])}
+	/>
+), {
+	shouldForwardProp: (prop) => prop !== 'layoutQuery'
+})(({ layoutQuery = 'lg', theme }) => ({
+	display: 'flex',
+	flex: '1 1 auto',
+	flexDirection: 'column',
+	paddingTop: 'var(--layout-dashboard-content-pt)',
+	paddingBottom: 'var(--layout-dashboard-content-pb)',
+	[theme.breakpoints.up(layoutQuery)]: {
+		paddingLeft: 'var(--layout-dashboard-content-px)',
+		paddingRight: 'var(--layout-dashboard-content-px)',
+	}
 }))
