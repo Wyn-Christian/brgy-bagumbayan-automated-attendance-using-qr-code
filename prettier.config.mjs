@@ -10,6 +10,8 @@ const config = {
   printWidth: 100,
   singleQuote: true,
   trailingComma: 'es5',
+  bracketSameLine: false,
+  objectWrap: 'preserve',
 };
 
 export default config;
