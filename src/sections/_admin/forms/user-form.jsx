@@ -5,10 +5,12 @@ import { useBoolean } from 'minimal-shared/hooks';
 import { zodResolver } from '@hookform/resolvers/zod';
 
 import Stack from '@mui/material/Stack';
+import Switch from '@mui/material/Switch';
 import Button from '@mui/material/Button';
 import MenuItem from '@mui/material/MenuItem';
 import IconButton from '@mui/material/IconButton';
 import InputAdornment from '@mui/material/InputAdornment';
+import FormControlLabel from '@mui/material/FormControlLabel';
 
 import { Iconify } from 'src/components/iconify';
 import { Form, Field } from 'src/components/hook-form';
@@ -34,12 +36,15 @@ const defaultValues = {
 
 // ----------------------------------------------------------------------
 
-export default function CreateUserForm() {
+export default function UserForm({ mode = 'create', initialValues }) {
   const showPassword = useBoolean();
+  const { value: IsChangePassword, setValue: setIsChangePassword } = useBoolean(!(mode === 'edit'));
+
+  console.log(IsChangePassword);
 
   const methods = useForm({
     resolver: zodResolver(userSchema),
-    defaultValues,
+    defaultValues: initialValues || defaultValues,
   });
 
   const {
@@ -80,42 +85,62 @@ export default function CreateUserForm() {
           <Field.Text name="email" label="Email" />
           <Field.Phone name="contact_number" label="Phone Number" country="PH" />
 
-          <Field.Text
-            name="password"
-            label="Password"
-            type={showPassword.value ? 'text' : 'password'}
-            slotProps={{
-              input: {
-                endAdornment: (
-                  <InputAdornment position="end">
-                    <IconButton onClick={showPassword.onToggle} edge="end">
-                      <Iconify
-                        icon={showPassword.value ? 'solar:eye-outline' : 'solar:eye-closed-outline'}
-                      />
-                    </IconButton>
-                  </InputAdornment>
-                ),
-              },
-            }}
-          />
-          <Field.Text
-            name="confirm_password"
-            label="Confirm password"
-            type={showPassword.value ? 'text' : 'password'}
-            slotProps={{
-              input: {
-                endAdornment: (
-                  <InputAdornment position="end">
-                    <IconButton onClick={showPassword.onToggle} edge="end">
-                      <Iconify
-                        icon={showPassword.value ? 'solar:eye-outline' : 'solar:eye-closed-outline'}
-                      />
-                    </IconButton>
-                  </InputAdornment>
-                ),
-              },
-            }}
-          />
+          {mode === 'edit' && (
+            <FormControlLabel
+              label="Change Password"
+              control={
+                <Switch
+                  value={!IsChangePassword}
+                  onChange={() => setIsChangePassword(!IsChangePassword)}
+                />
+              }
+            />
+          )}
+
+          {(mode == 'create' || IsChangePassword) && (
+            <>
+              <Field.Text
+                name="password"
+                label="Password"
+                type={showPassword.value ? 'text' : 'password'}
+                slotProps={{
+                  input: {
+                    endAdornment: (
+                      <InputAdornment position="end">
+                        <IconButton onClick={showPassword.onToggle} edge="end">
+                          <Iconify
+                            icon={
+                              showPassword.value ? 'solar:eye-outline' : 'solar:eye-closed-outline'
+                            }
+                          />
+                        </IconButton>
+                      </InputAdornment>
+                    ),
+                  },
+                }}
+              />
+              <Field.Text
+                name="confirm_password"
+                label="Confirm password"
+                type={showPassword.value ? 'text' : 'password'}
+                slotProps={{
+                  input: {
+                    endAdornment: (
+                      <InputAdornment position="end">
+                        <IconButton onClick={showPassword.onToggle} edge="end">
+                          <Iconify
+                            icon={
+                              showPassword.value ? 'solar:eye-outline' : 'solar:eye-closed-outline'
+                            }
+                          />
+                        </IconButton>
+                      </InputAdornment>
+                    ),
+                  },
+                }}
+              />
+            </>
+          )}
           <Field.RadioGroup
             name="role"
             label="Role"
@@ -139,7 +164,13 @@ export default function CreateUserForm() {
             Reset
           </Button>
           <Button type="submit" variant="contained" disabled={isSubmitting}>
-            {isSubmitting ? 'Creating...' : 'Create User'}
+            {isSubmitting
+              ? mode === 'edit'
+                ? 'Saving...'
+                : 'Creating...'
+              : mode === 'edit'
+                ? 'Save Changes'
+                : 'Create User'}
           </Button>
         </Stack>
       </Stack>

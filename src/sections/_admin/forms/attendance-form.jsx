@@ -15,24 +15,20 @@ import CustomCardForm from '../components/custom-card-form';
 
 // ----------------------------------------------------------------------
 
-const defaultValues = {
-  user_id: null,
-  check_in_time: null,
-  check_out_time: null,
-  source: 'kiosk',
-  remarks: '',
-};
-
-// ----------------------------------------------------------------------
-
-export default function CreateAttendanceForm() {
+export default function AttendanceForm({ mode = 'create', initialValues }) {
   const [options, setOptions] = useState([]);
   const [inputValue, setInputValue] = useState('');
   const [loading, setLoading] = useState(false);
 
   const methods = useForm({
     resolver: zodResolver(attendanceSchema),
-    defaultValues,
+    defaultValues: initialValues || {
+      user_id: null,
+      check_in_time: null,
+      check_out_time: null,
+      source: 'kiosk',
+      remarks: '',
+    },
   });
 
   const {
@@ -51,7 +47,6 @@ export default function CreateAttendanceForm() {
     }
   });
 
-  // Simulate input-based fetch
   useEffect(() => {
     if (!inputValue) {
       setOptions([]); // clear options
@@ -61,21 +56,21 @@ export default function CreateAttendanceForm() {
 
     const timeout = setTimeout(() => {
       const allUsers = [
-        { id: 1, label: 'Jon Snow' },
-        { id: 2, label: 'Arya Stark' },
-        { id: 3, label: 'Tyrion Lannister' },
-        { id: 4, label: 'Daenerys Targaryen' },
-        { id: 5, label: 'Cersei Lannister' },
-        { id: 6, label: 'Jorah Mormont' },
+        { id: 1, full_name: 'Jon Snow' },
+        { id: 2, full_name: 'Arya Stark' },
+        { id: 3, full_name: 'Tyrion Lannister' },
+        { id: 4, full_name: 'Daenerys Targaryen' },
+        { id: 5, full_name: 'Cersei Lannister' },
+        { id: 6, full_name: 'Jorah Mormont' },
       ];
 
       const filtered = allUsers.filter((user) =>
-        user.label.toLowerCase().includes(inputValue.toLowerCase())
+        user.full_name.toLowerCase().includes(inputValue.toLowerCase())
       );
 
       setOptions(filtered);
       setLoading(false);
-    }, 500); // simulate debounce/fetch delay
+    }, 500);
 
     // eslint-disable-next-line consistent-return
     return () => clearTimeout(timeout);
@@ -103,7 +98,7 @@ export default function CreateAttendanceForm() {
                 setInputValue(newValue);
               }
             }}
-            getOptionLabel={(option) => option?.label ?? ''}
+            getOptionLabel={(option) => option?.full_name ?? ''}
             isOptionEqualToValue={(option, value) => option?.id === value?.id}
           />
 
@@ -136,8 +131,14 @@ export default function CreateAttendanceForm() {
           >
             Reset
           </Button>
-          <Button variant="contained" type="submit">
-            {isSubmitting ? 'Creating...' : 'Create Attendance'}
+          <Button type="submit" variant="contained">
+            {isSubmitting
+              ? mode === 'edit'
+                ? 'Saving...'
+                : 'Creating...'
+              : mode === 'edit'
+                ? 'Save Changes'
+                : 'Create'}
           </Button>
         </Stack>
       </Stack>

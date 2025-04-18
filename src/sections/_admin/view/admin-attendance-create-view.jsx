@@ -4,7 +4,7 @@ import { paths } from 'src/routes/paths';
 
 import { CustomBreadcrumbs } from 'src/components/custom-breadcrumbs';
 
-import CreateAttendanceForm from '../attendance/create-attendance-form';
+import AttendanceForm from '../forms/attendance-form';
 
 // ----------------------------------------------------------------------
 
@@ -26,7 +26,7 @@ export default function AdminAttendanceCreateView() {
         ]}
         sx={{ mb: { xs: 3, md: 5 } }}
       />
-      <CreateAttendanceForm />
+      <AttendanceForm />
     </>
   );
 }

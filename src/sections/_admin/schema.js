@@ -12,7 +12,7 @@ export const attendanceSchema = zod
     user_id: schemaHelper.nullableInput(
       zod.object({
         id: zod.number(),
-        label: zod.string(),
+        full_name: zod.string(),
       }),
       { message: 'User is required!' }
     ),
