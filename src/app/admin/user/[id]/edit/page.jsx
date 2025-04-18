@@ -6,6 +6,7 @@ import AdminUserEditView from 'src/sections/_admin/view/admin-user-edit-view';
 
 export const metadata = { title: `User edit | ${CONFIG.appName}` };
 
-export default function Page() {
-	return <AdminUserEditView />
+export default function Page({ params }) {
+  const { id } = params;
+  return <AdminUserEditView id={id} />;
 }

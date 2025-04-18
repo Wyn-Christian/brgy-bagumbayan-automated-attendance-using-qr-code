@@ -40,8 +40,6 @@ export default function UserForm({ mode = 'create', initialValues }) {
   const showPassword = useBoolean();
   const { value: IsChangePassword, setValue: setIsChangePassword } = useBoolean(!(mode === 'edit'));
 
-  console.log(IsChangePassword);
-
   const methods = useForm({
     resolver: zodResolver(userSchema),
     defaultValues: initialValues || defaultValues,
