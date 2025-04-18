@@ -20,47 +20,45 @@ import { FormReturnLink } from './components/form-return-link';
 // ----------------------------------------------------------------------
 
 export function AttendanceCheckOutView() {
-	const defaultValues = { email: '', password: '' };
+  const defaultValues = { email: '', password: '' };
 
-	const methods = useForm({ resolver: zodResolver(SignInSchema), defaultValues });
+  const methods = useForm({ resolver: zodResolver(SignInSchema), defaultValues });
 
-	const { reset, handleSubmit } = methods;
+  const { reset, handleSubmit } = methods;
 
-	const onSubmit = handleSubmit(async (data) => {
-		try {
-			await new Promise((resolve) => setTimeout(resolve, 500));
-			reset();
-			console.info('DATA', data);
-		} catch (error) {
-			console.error(error);
-		}
-	});
+  const onSubmit = handleSubmit(async (data) => {
+    try {
+      await new Promise((resolve) => setTimeout(resolve, 500));
+      reset();
+      console.info('DATA', data);
+    } catch (error) {
+      console.error(error);
+    }
+  });
 
-	return (
-		<>
-			<FormHead
-				title="Attendance Check Out"
-				description={
-					<Typography variant='subtitle1'>
-						Please scan your qr code
-					</Typography>
-				}
-			/>
+  return (
+    <>
+      <FormHead
+        title="Attendance Check Out"
+        description={<Typography variant="subtitle1">Please scan your qr code...</Typography>}
+      />
 
-			{/* <Form methods={methods} onSubmit={onSubmit}>
+      {/* <Form methods={methods} onSubmit={onSubmit}>
 
 			</Form> */}
 
+      <FormDivider label="Other options" />
 
-			<FormDivider label="Other options" />
+      <Box sx={{ gap: 1.5, display: 'flex', justifyContent: 'center' }}>
+        <Button component={RouterLink} href={paths.attendance.checkIn} variant="outlined">
+          Check In
+        </Button>
+        <Button component={RouterLink} href={paths.auth.login} variant="outlined">
+          Login
+        </Button>
+      </Box>
 
-			<Box sx={{ gap: 1.5, display: 'flex', justifyContent: 'center' }}>
-				<Button component={RouterLink} href={paths.attendance.checkIn} variant='outlined'>Check In</Button>
-				<Button component={RouterLink} href={paths.auth.login} variant='outlined'>Login</Button>
-			</Box>
-
-			<FormReturnLink href={paths.home} label="Return to home" />
-
-		</>
-	);
+      <FormReturnLink href={paths.home} label="Return to home" />
+    </>
+  );
 }

@@ -47,9 +47,18 @@ export default function AdminUserDetailsView({ id, data, attendance_list }) {
     const url = URL.createObjectURL(svgBlob);
 
     img.onload = () => {
-      canvas.width = img.width;
-      canvas.height = img.height;
-      ctx?.drawImage(img, 0, 0);
+      const padding = 30; // px white space
+
+      canvas.width = img.width + padding * 2;
+      canvas.height = img.height + padding * 2;
+
+      // Fill background with white
+      ctx.fillStyle = '#ffffff';
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+      // Draw QR image centered
+      ctx.drawImage(img, padding, padding);
+
       URL.revokeObjectURL(url);
 
       const imgURI = canvas.toDataURL('image/png');

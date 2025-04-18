@@ -1,6 +1,7 @@
 'use client';
 
 import { m } from 'framer-motion';
+import { varAlpha } from 'minimal-shared/utils';
 
 import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
@@ -13,6 +14,8 @@ import Typography from '@mui/material/Typography';
 import { paths } from 'src/routes/paths';
 import { RouterLink } from 'src/routes/components';
 
+import { CONFIG } from 'src/global-config';
+
 import { Iconify } from 'src/components/iconify';
 import { varFade } from 'src/components/animate/variants';
 import { AnimateText } from 'src/components/animate/animate-text';
@@ -23,62 +26,94 @@ import { AnimateCountUp } from 'src/components/animate/animate-count-up';
 
 export function HomeView() {
   return (
-    <Box sx={{ bgcolor: 'background.default', py: 10 }}>
-      <Container>
-        {/* HERO SECTION */}
-        <MotionViewport>
-          <m.div variants={varFade('inUp')}>
-            <Stack
-              spacing={4}
-              alignItems="center"
-              textAlign="center"
-              justifyContent="center"
-              sx={{ minHeight: '80vh' }}
-            >
-              <AnimateText
-                component="h1"
-                textContent={['QR Code-Based Attendance System', 'for Barangay Bagumbayan']}
-                sx={{ fontSize: { xs: 32, md: 48 }, fontWeight: 'bold' }}
-              />
+    <>
+      {/* HERO SECTION */}
+      <Box
+        component="section"
+        sx={[
+          (theme) => ({
+            ...theme.mixins.bgGradient({
+              images: [
+                `linear-gradient(to bottom, ${varAlpha(theme.vars.palette.background.defaultChannel, 0.9)}, ${varAlpha(theme.vars.palette.background.defaultChannel, 0.9)})`,
+                `url(${CONFIG.assetsDir}/assets/background/overlay-1.webp)`,
+              ],
+            }),
+            py: 10,
+            overflow: 'hidden',
+            position: 'relative',
+            [theme.breakpoints.up('md')]: {
+              py: 15,
+              minHeight: 760,
+              height: '100vh',
+              maxHeight: 1440,
+              display: 'flex',
+              alignItems: 'center',
+            },
+          }),
+        ]}
+      >
+        <Container
+          sx={{
+            display: 'flex',
+            justifyContent: 'center',
+          }}
+        >
+          <MotionViewport>
+            <m.div variants={varFade('inUp')}>
+              <Stack
+                spacing={4}
+                alignItems="center"
+                textAlign="center"
+                justifyContent="center"
+                sx={{ minHeight: '80vh' }}
+              >
+                <AnimateText
+                  component="h1"
+                  textContent={['QR Code-Based Attendance System', 'for Barangay Bagumbayan']}
+                  sx={{ fontSize: { xs: 32, md: 48 }, fontWeight: 'bold' }}
+                />
 
-              <Typography variant="subtitle1" sx={{ maxWidth: 600 }}>
-                A modern, secure, and user-friendly system to streamline attendance monitoring for
-                staff and barangay officials.
-              </Typography>
+                <Typography variant="subtitle1" sx={{ maxWidth: 600 }}>
+                  A modern, secure, and user-friendly system to streamline attendance monitoring for
+                  staff and barangay officials.
+                </Typography>
 
-              <Stack direction={{ xs: 'column', sm: 'row' }} spacing={2}>
-                <Button
-                  LinkComponent={RouterLink}
-                  href={paths.attendance.checkIn}
-                  variant="contained"
-                  color="primary"
-                  size="large"
-                >
-                  Check In
-                </Button>
-                <Button
-                  LinkComponent={RouterLink}
-                  href={paths.attendance.checkOut}
-                  variant="outlined"
-                  color="primary"
-                  size="large"
-                >
-                  Check Out
-                </Button>
-                <Button
-                  LinkComponent={RouterLink}
-                  href={paths.auth.login}
-                  variant="outlined"
-                  color="inherit"
-                  size="large"
-                >
-                  Login
-                </Button>
+                <Stack direction={{ xs: 'column', sm: 'row' }} spacing={2}>
+                  <Button
+                    LinkComponent={RouterLink}
+                    href={paths.attendance.checkIn}
+                    variant="contained"
+                    color="primary"
+                    size="large"
+                  >
+                    Check In
+                  </Button>
+                  <Button
+                    LinkComponent={RouterLink}
+                    href={paths.attendance.checkOut}
+                    variant="outlined"
+                    color="primary"
+                    size="large"
+                  >
+                    Check Out
+                  </Button>
+                  <Button
+                    LinkComponent={RouterLink}
+                    href={paths.auth.login}
+                    variant="outlined"
+                    color="inherit"
+                    size="large"
+                  >
+                    Login
+                  </Button>
+                </Stack>
               </Stack>
-            </Stack>
-          </m.div>
-        </MotionViewport>
+            </m.div>
+          </MotionViewport>
+        </Container>
+      </Box>
 
+      <Container>
         {/* FEATURES SECTION */}
         <Box sx={{ mt: 10 }}>
           <Grid container spacing={4} justifyContent="center">
@@ -216,6 +251,6 @@ export function HomeView() {
           </m.div>
         </MotionViewport>
       </Container>
-    </Box>
+    </>
   );
 }
