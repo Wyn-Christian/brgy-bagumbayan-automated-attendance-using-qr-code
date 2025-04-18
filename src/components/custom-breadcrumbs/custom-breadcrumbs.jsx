@@ -27,7 +27,6 @@ export function CustomBreadcrumbs({
 }) {
   const lastLink = links[links.length - 1]?.name;
 
-  console.log(slotProps);
   const renderHeading = () => (
     <BreadcrumbsHeading {...slotProps?.heading}>
       {backHref ? <BackLink href={backHref} label={heading} /> : heading}
