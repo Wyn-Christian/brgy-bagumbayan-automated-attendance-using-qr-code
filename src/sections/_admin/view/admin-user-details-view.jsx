@@ -1,7 +1,9 @@
 'use client';
 
-import dayjs from 'dayjs';
+import { useRef } from 'react';
+import QRCode from 'react-qr-code';
 
+import Box from '@mui/material/Box';
 import Link from '@mui/material/Link';
 import Stack from '@mui/material/Stack';
 import Table from '@mui/material/Table';
@@ -23,11 +25,43 @@ import { fDate, fTime, fDateTime } from 'src/utils/format-time';
 
 import { Label } from 'src/components/label';
 import { Iconify } from 'src/components/iconify';
+import { Scrollbar } from 'src/components/scrollbar';
 import { CustomBreadcrumbs } from 'src/components/custom-breadcrumbs';
 
 // ----------------------------------------------------------------------
 
-export default function AdminUserDetailsView({ id, data }) {
+export default function AdminUserDetailsView({ id, data, attendance_list }) {
+  const qrRef = useRef();
+
+  const handleDownloadQR = () => {
+    const svg = qrRef.current?.querySelector('svg');
+    if (!svg) return;
+
+    const serializer = new XMLSerializer();
+    const svgString = serializer.serializeToString(svg);
+    const canvas = document.createElement('canvas');
+    const ctx = canvas.getContext('2d');
+    const img = new Image();
+
+    const svgBlob = new Blob([svgString], { type: 'image/svg+xml;charset=utf-8' });
+    const url = URL.createObjectURL(svgBlob);
+
+    img.onload = () => {
+      canvas.width = img.width;
+      canvas.height = img.height;
+      ctx?.drawImage(img, 0, 0);
+      URL.revokeObjectURL(url);
+
+      const imgURI = canvas.toDataURL('image/png');
+      const a = document.createElement('a');
+      a.download = `${full_name.replace(/\s+/g, '_')}_QR.png`;
+      a.href = imgURI;
+      a.click();
+    };
+
+    img.src = url;
+  };
+
   const {
     full_name,
     first_name,
@@ -39,43 +73,11 @@ export default function AdminUserDetailsView({ id, data }) {
     birthday,
     role,
     contact_number,
+    qr_code,
     is_active,
     created_at,
     updated_at,
   } = data;
-
-  const remarksSamples = [
-    'On-time',
-    'Late check-in',
-    'Left early',
-    'Overtime',
-    'No check-out',
-    'Scanned via mobile',
-    '',
-  ];
-
-  const sources = ['kiosk', 'manual'];
-
-  const mockAttendanceRows = Array.from({ length: 10 }).map((_, i) => {
-    const day = dayjs().subtract(i, 'day');
-
-    // Random hour and minute for check-in
-    const checkIn = day
-      .hour(7 + Math.floor(Math.random() * 3))
-      .minute(Math.floor(Math.random() * 60));
-
-    // 60% chance to have a check-out
-    const hasCheckOut = Math.random() > 0.4;
-    const checkOut = hasCheckOut ? checkIn.add(8 + Math.floor(Math.random() * 2), 'hour') : null;
-
-    return {
-      id: i + 1,
-      check_in_time: checkIn.toISOString(),
-      check_out_time: checkOut ? checkOut.toISOString() : null,
-      source: sources[Math.floor(Math.random() * sources.length)],
-      remarks: remarksSamples[Math.floor(Math.random() * remarksSamples.length)],
-    };
-  });
 
   return (
     <>
@@ -134,6 +136,27 @@ export default function AdminUserDetailsView({ id, data }) {
             </Stack>
           </Stack>
 
+          <Stack spacing={1}>
+            <Typography variant="subtitle2">QR Image</Typography>
+
+            <Box ref={qrRef} sx={{ maxWidth: { xs: 128, md: 256 }, mx: 'auto' }}>
+              <QRCode
+                id="qr-code"
+                style={{ height: 'auto', width: '100%' }}
+                size={512}
+                value={qr_code}
+              />
+            </Box>
+            <Button
+              variant="outlined"
+              onClick={handleDownloadQR}
+              startIcon={<Iconify icon="line-md:download-loop" />}
+              sx={{ mt: 1, mx: 'auto', width: 'fit-content' }}
+            >
+              Download QR
+            </Button>
+          </Stack>
+
           <Divider flexItem />
 
           <Stack direction="row" spacing={2}>
@@ -160,37 +183,43 @@ export default function AdminUserDetailsView({ id, data }) {
             Attendance History
           </Typography>
 
-          <Table size="small">
-            <TableHead>
-              <TableRow>
-                <TableCell>Date</TableCell>
-                <TableCell>Check-in</TableCell>
-                <TableCell>Check-out</TableCell>
-                <TableCell>Source</TableCell>
-                <TableCell>Remarks</TableCell>
-              </TableRow>
-            </TableHead>
+          <Box sx={{ width: '100%', overflow: 'hidden' }}>
+            <Scrollbar fillContent>
+              <Table size="small">
+                <TableHead>
+                  <TableRow>
+                    <TableCell sx={{ minWidth: 130 }}>Date</TableCell>
+                    <TableCell sx={{ minWidth: 130 }}>Check-in</TableCell>
+                    <TableCell sx={{ minWidth: 130 }}>Check-out</TableCell>
+                    <TableCell>Source</TableCell>
+                    <TableCell sx={{ minWidth: 250 }}>Remarks</TableCell>
+                  </TableRow>
+                </TableHead>
 
-            <TableBody>
-              {mockAttendanceRows.map((row) => (
-                <TableRow key={row.id}>
-                  <TableCell>{fDate(row.check_in_time)}</TableCell>
-                  <TableCell>{fTime(row.check_in_time)}</TableCell>
-                  <TableCell>
-                    {row.check_out_time ? (
-                      fTime(row.check_out_time)
-                    ) : (
-                      <Label color="warning">Pending</Label>
-                    )}
-                  </TableCell>
-                  <TableCell>
-                    <Label color={row.source === 'kiosk' ? 'info' : 'default'}>{row.source}</Label>
-                  </TableCell>
-                  <TableCell>{row.remarks || '—'}</TableCell>
-                </TableRow>
-              ))}
-            </TableBody>
-          </Table>
+                <TableBody>
+                  {attendance_list.map((row) => (
+                    <TableRow key={row.id}>
+                      <TableCell>{fDate(row.check_in_time)}</TableCell>
+                      <TableCell>{fTime(row.check_in_time)}</TableCell>
+                      <TableCell>
+                        {row.check_out_time ? (
+                          fTime(row.check_out_time)
+                        ) : (
+                          <Label color="warning">Pending</Label>
+                        )}
+                      </TableCell>
+                      <TableCell>
+                        <Label color={row.source === 'kiosk' ? 'info' : 'default'}>
+                          {row.source}
+                        </Label>
+                      </TableCell>
+                      <TableCell>{row.remarks || '—'}</TableCell>
+                    </TableRow>
+                  ))}
+                </TableBody>
+              </Table>
+            </Scrollbar>
+          </Box>
         </Stack>
       </Container>
     </>
