@@ -26,7 +26,7 @@ export default function AttendanceForm({ mode = 'create', initialValues }) {
       user_id: null,
       check_in_time: null,
       check_out_time: null,
-      source: 'kiosk',
+      source: 'manual',
       remarks: '',
     },
   });

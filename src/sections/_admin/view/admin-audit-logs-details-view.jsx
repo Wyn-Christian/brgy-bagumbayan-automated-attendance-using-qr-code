@@ -27,7 +27,7 @@ export default function AdminAuditLogsDetailsView() {
         ]}
         sx={{ mb: { xs: 3, md: 5 } }}
       />
-      <Typography>test</Typography>
+      <Typography>Audit Logs</Typography>
     </>
   );
 }
