@@ -30,6 +30,7 @@ function NavMobile({ open, onClose, role }) {
               display: 'flex',
               flexDirection: 'column',
               width: 'var(--layout-nav-mobile-width)',
+              px: 1,
             },
           ],
         },
