@@ -13,7 +13,7 @@ import CustomDataGrid from '../components/custom-data-grid';
 
 // ----------------------------------------------------------------------
 
-export default function AdminUserListView() {
+export default function AdminUserListView({ data = [] }) {
   return (
     <>
       <CustomBreadcrumbs

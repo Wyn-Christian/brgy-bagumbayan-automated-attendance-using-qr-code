@@ -6,8 +6,8 @@ import AdminAttendanceDetailsView from 'src/sections/_admin/view/admin-attendanc
 
 export const metadata = { title: `Attendance details | ${CONFIG.appName}` };
 
-export default function Page({ params }) {
-  const { id } = params;
+export default async function Page({ params }) {
+  const { id } = await params;
 
   const data = {
     id,

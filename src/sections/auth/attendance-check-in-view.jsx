@@ -15,7 +15,7 @@ import { Form } from 'src/components/hook-form';
 import { FormHead } from './components/form-head';
 import { QRCodeSchema } from './components/schema';
 import { FormDivider } from './components/form-divider';
-import { QRCheckInForm } from './components/qr-check-in-form';
+import { QRScanForm } from './components/qr-scan-in-form';
 import { FormReturnLink } from './components/form-return-link';
 
 // ----------------------------------------------------------------------
@@ -44,13 +44,10 @@ export function AttendanceCheckInView() {
 
   return (
     <>
-      <FormHead
-        title="Attendance Check In"
-        description={<Typography variant="subtitle1">Please scan your QR code...</Typography>}
-      />
+      <FormHead title="Attendance Check In" description="Please scan your QR code..." />
 
       <Form methods={methods} onSubmit={onSubmit}>
-        <QRCheckInForm />
+        <QRScanForm />
       </Form>
 
       <FormDivider label="Other options" />

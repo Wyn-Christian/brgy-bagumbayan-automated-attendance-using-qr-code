@@ -8,6 +8,8 @@ import { RouterLink } from 'src/routes/components';
 
 import { fDate } from 'src/utils/format-time';
 
+import { departments } from 'src/assets/data';
+
 import { Label } from 'src/components/label';
 import { Iconify } from 'src/components/iconify';
 
@@ -63,6 +65,14 @@ export const userColumns = [
     headerName: 'Address',
     width: 250,
     type: 'string',
+  },
+
+  {
+    field: 'department',
+    headerName: 'Department',
+    width: 250,
+    type: 'singleSelect',
+    valueOptions: departments,
   },
 
   {
@@ -154,6 +164,7 @@ export const mockUserRows = Array.from({ length: 50 }).map((_, i) => {
   return {
     id: i + 1,
     role: i % 8 === 0 ? 'admin' : 'user',
+    department: departments[i % departments.length],
     first_name: firstName,
     middle_name: 'M.', // fake middle
     last_name: lastName,

@@ -9,11 +9,12 @@ import AdminUserDetailsView from 'src/sections/_admin/view/admin-user-details-vi
 export const metadata = { title: `User details | ${CONFIG.appName}` };
 
 export default async function Page({ params }) {
-  const { id } = params;
+  const { id } = await params;
 
   const data = {
     id,
     role: 'admin',
+    department: 'Security Force - Morning Shift',
     first_name: 'Juan',
     middle_name: 'Santos',
     last_name: 'Dela Cruz',

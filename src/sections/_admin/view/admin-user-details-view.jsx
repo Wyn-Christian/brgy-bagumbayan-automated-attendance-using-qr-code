@@ -81,6 +81,7 @@ export default function AdminUserDetailsView({ id, data, attendance_list }) {
     address,
     birthday,
     role,
+    department,
     contact_number,
     qr_code,
     is_active,
@@ -117,9 +118,15 @@ export default function AdminUserDetailsView({ id, data, attendance_list }) {
 
       <Container maxWidth="md">
         <Stack gap={3}>
-          <Stack gap={1.5}>
-            <Typography variant="h6">Full Name</Typography>
-            <Typography variant="subtitle1">{full_name}</Typography>
+          <Stack direction={{ xs: 'column-reverse', sm: 'row' }} justifyContent="space-between">
+            <Stack gap={1.5}>
+              <Typography variant="h6">Full Name</Typography>
+              <Typography variant="subtitle1">{full_name}</Typography>
+            </Stack>
+            <Box sx={{ display: 'flex', justifyContent: 'flex-end', gap: 1 }}>
+              <Label>{department}</Label>
+              <Label color={role === 'admin' ? 'primary' : 'default'}>{role}</Label>
+            </Box>
           </Stack>
 
           <Divider flexItem />
@@ -134,16 +141,6 @@ export default function AdminUserDetailsView({ id, data, attendance_list }) {
           </Stack>
 
           <Divider flexItem />
-
-          <Stack spacing={1}>
-            <Typography variant="subtitle2">Account Status</Typography>
-            <Stack direction="row" spacing={2}>
-              <Label color={is_active ? 'success' : 'warning'}>
-                {is_active ? 'Active' : 'Inactive'}
-              </Label>
-              <Label color={role === 'admin' ? 'primary' : 'default'}>{role}</Label>
-            </Stack>
-          </Stack>
 
           <Stack spacing={1}>
             <Typography variant="subtitle2">QR Image</Typography>

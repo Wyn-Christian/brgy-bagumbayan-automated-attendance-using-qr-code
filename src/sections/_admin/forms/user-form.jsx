@@ -12,6 +12,8 @@ import IconButton from '@mui/material/IconButton';
 import InputAdornment from '@mui/material/InputAdornment';
 import FormControlLabel from '@mui/material/FormControlLabel';
 
+import { departments } from 'src/assets/data/departments';
+
 import { Iconify } from 'src/components/iconify';
 import { Form, Field } from 'src/components/hook-form';
 
@@ -32,13 +34,14 @@ const defaultValues = {
   password: '',
   confirmPassword: '',
   role: 'user',
+  department: 'Staff',
 };
 
 // ----------------------------------------------------------------------
 
 export default function UserForm({ mode = 'create', initialValues }) {
   const showPassword = useBoolean();
-  const { value: IsChangePassword, setValue: setIsChangePassword } = useBoolean(!(mode === 'edit'));
+  const { value: IsUpdatePassword, setValue: setIsUpdatePassword } = useBoolean(false);
 
   const methods = useForm({
     resolver: zodResolver(userSchema),
@@ -79,23 +82,46 @@ export default function UserForm({ mode = 'create', initialValues }) {
           <Field.Text name="address" label="Address" />
         </CustomCardForm>
 
+        <CustomCardForm
+          title="User Role & Department"
+          subheader="Choose where this user belongs and their access level"
+        >
+          <Field.Select name="department" label="Department">
+            {departments.map((value) => (
+              <MenuItem key={value} value={value}>
+                {value}
+              </MenuItem>
+            ))}
+          </Field.Select>
+          <Field.RadioGroup
+            name="role"
+            label="Role"
+            row
+            options={[
+              { label: 'User', value: 'user' },
+              { label: 'Admin', value: 'admin' },
+            ]}
+            sx={{ gap: 1 }}
+          />
+        </CustomCardForm>
+
         <CustomCardForm title="Account Credentials">
           <Field.Text name="email" label="Email" />
           <Field.Phone name="contact_number" label="Phone Number" country="PH" />
 
           {mode === 'edit' && (
             <FormControlLabel
-              label="Change Password"
+              label="Update Password"
               control={
                 <Switch
-                  value={!IsChangePassword}
-                  onChange={() => setIsChangePassword(!IsChangePassword)}
+                  value={IsUpdatePassword}
+                  onChange={() => setIsUpdatePassword(!IsUpdatePassword)}
                 />
               }
             />
           )}
 
-          {(mode == 'create' || IsChangePassword) && (
+          {(mode == 'create' || IsUpdatePassword) && (
             <>
               <Field.Text
                 name="password"
@@ -139,16 +165,6 @@ export default function UserForm({ mode = 'create', initialValues }) {
               />
             </>
           )}
-          <Field.RadioGroup
-            name="role"
-            label="Role"
-            row
-            options={[
-              { label: 'User', value: 'user' },
-              { label: 'Admin', value: 'admin' },
-            ]}
-            sx={{ gap: 1 }}
-          />
         </CustomCardForm>
 
         <Stack direction="row" alignItems="center" justifyContent="flex-end" gap={1}>

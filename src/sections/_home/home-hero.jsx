@@ -47,11 +47,20 @@ export default function HomeHero() {
         <MotionViewport>
           <m.div variants={varFade('inUp')}>
             <Stack spacing={4} alignItems="center" textAlign="center" justifyContent="center">
-              <AnimateText
-                component="h1"
-                textContent={['QR Code-Based Attendance System', 'for Barangay Bagumbayan']}
-                sx={{ fontSize: { xs: 32, md: 48 }, fontWeight: 'bold' }}
-              />
+              <Box
+                component="span"
+                sx={(theme) => ({
+                  ...theme.mixins.textGradient(
+                    `90deg, ${theme.vars.palette.primary.main} 20%, ${theme.vars.palette.secondary.main} 100%`
+                  ),
+                })}
+              >
+                <AnimateText
+                  component="h1"
+                  textContent={['QR Code-Based Attendance System', 'for Barangay Bagumbayan']}
+                  sx={{ fontSize: { xs: 32, md: 48 }, fontWeight: 'bold' }}
+                />
+              </Box>
 
               <Typography variant="subtitle1" sx={{ maxWidth: 600 }}>
                 A modern, secure, and user-friendly system to streamline attendance monitoring for

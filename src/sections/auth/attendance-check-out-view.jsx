@@ -5,7 +5,6 @@ import { zodResolver } from '@hookform/resolvers/zod';
 
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
-import Typography from '@mui/material/Typography';
 
 import { paths } from 'src/routes/paths';
 import { RouterLink } from 'src/routes/components';
@@ -13,24 +12,30 @@ import { RouterLink } from 'src/routes/components';
 import { Form } from 'src/components/hook-form';
 
 import { FormHead } from './components/form-head';
-import { SignInSchema } from './components/schema';
+import { QRCodeSchema } from './components/schema';
 import { FormDivider } from './components/form-divider';
+import { QRScanForm } from './components/qr-scan-in-form';
 import { FormReturnLink } from './components/form-return-link';
 
 // ----------------------------------------------------------------------
 
 export function AttendanceCheckOutView() {
-  const defaultValues = { email: '', password: '' };
+  const defaultValues = { qr_code: '' };
 
-  const methods = useForm({ resolver: zodResolver(SignInSchema), defaultValues });
+  const methods = useForm({
+    resolver: zodResolver(QRCodeSchema),
+    defaultValues,
+  });
 
   const { reset, handleSubmit } = methods;
 
   const onSubmit = handleSubmit(async (data) => {
     try {
       await new Promise((resolve) => setTimeout(resolve, 500));
-      reset();
+
       console.info('DATA', data);
+
+      reset();
     } catch (error) {
       console.error(error);
     }
@@ -38,14 +43,11 @@ export function AttendanceCheckOutView() {
 
   return (
     <>
-      <FormHead
-        title="Attendance Check Out"
-        description={<Typography variant="subtitle1">Please scan your qr code...</Typography>}
-      />
+      <FormHead title="Attendance Check Out" description="Please scan your QR code..." />
 
-      {/* <Form methods={methods} onSubmit={onSubmit}>
-
-			</Form> */}
+      <Form methods={methods} onSubmit={onSubmit}>
+        <QRScanForm />
+      </Form>
 
       <FormDivider label="Other options" />
 

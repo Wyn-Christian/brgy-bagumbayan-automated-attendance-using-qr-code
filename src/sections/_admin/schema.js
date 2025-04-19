@@ -68,6 +68,7 @@ export const userSchema = zod
     role: zod.enum(['admin', 'user'], {
       errorMap: () => ({ message: 'Role is required' }),
     }),
+    department: zod.string().optional(),
   })
   .refine((data) => data.password === data.confirm_password, {
     message: 'Passwords do not match',

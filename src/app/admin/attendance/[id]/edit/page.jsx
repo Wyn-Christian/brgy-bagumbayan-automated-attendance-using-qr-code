@@ -6,8 +6,8 @@ import AdminAttendanceEditView from 'src/sections/_admin/view/admin-attendance-e
 
 export const metadata = { title: `Edit attendance | ${CONFIG.appName}` };
 
-export default function Page({ params }) {
-  const { id } = params;
+export default async function Page({ params }) {
+  const { id } = await params;
 
   return <AdminAttendanceEditView id={id} />;
 }

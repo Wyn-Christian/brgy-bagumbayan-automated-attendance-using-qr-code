@@ -8,22 +8,7 @@ import UserForm from '../forms/user-form';
 
 // ----------------------------------------------------------------------
 
-export default function AdminUserEditView({ id }) {
-  const initialValues = {
-    id,
-    first_name: 'Juan',
-    middle_name: 'Santos',
-    last_name: 'Dela Cruz',
-    gender: 'male',
-    birthday: '1990-01-01',
-    address: '123 Bagumbayan, Taguig',
-    email: 'juan@example.com',
-    contact_number: '+639170000000',
-    role: 'admin',
-    password: '',
-    confirm_password: '',
-  };
-
+export default function AdminUserEditView({ id, data }) {
   return (
     <>
       <CustomBreadcrumbs
@@ -37,7 +22,7 @@ export default function AdminUserEditView({ id }) {
         sx={{ mb: { xs: 3, md: 5 } }}
       />
 
-      {initialValues && <UserForm mode="edit" initialValues={initialValues} />}
+      {data && <UserForm mode="edit" initialValues={data} />}
     </>
   );
 }
