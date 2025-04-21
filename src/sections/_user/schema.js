@@ -17,13 +17,27 @@ export const userSchema = zod
     address: zod.string().min(1, 'Address is required'),
     email: zod.string().email('Invalid email address'),
     contact_number: schemaHelper.phoneNumber({ isValid: isValidPhoneNumber }),
-    password: zod.string().min(6, 'Password must be at least 6 characters'),
-    confirm_password: zod.string().min(6, 'Password must be at least 6 characters'),
     role: zod.enum(['admin', 'user'], {
       errorMap: () => ({ message: 'Role is required' }),
     }),
+    department: zod.string().optional(),
+
+    old_password: zod.string().optional(),
+    password: zod.string().optional(),
+    confirm_password: zod.string().optional(),
   })
-  .refine((data) => data.password === data.confirm_password, {
+  .refine(
+    (data) => !data.password || (data.password.length >= 6 && data.confirm_password?.length >= 6),
+    {
+      message: 'Password must be at least 6 characters',
+      path: ['password'],
+    }
+  )
+  .refine((data) => !data.password || data.password === data.confirm_password, {
     message: 'Passwords do not match',
     path: ['confirm_password'],
+  })
+  .refine((data) => !data.password || data.old_password, {
+    message: 'Old password is required to set a new password',
+    path: ['old_password'],
   });

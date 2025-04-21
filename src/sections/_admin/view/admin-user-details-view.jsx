@@ -1,22 +1,22 @@
 'use client';
 
-import { useRef } from 'react';
 import QRCode from 'react-qr-code';
+import { useRef, useState } from 'react';
 
 import Box from '@mui/material/Box';
-import Link from '@mui/material/Link';
 import Stack from '@mui/material/Stack';
 import Table from '@mui/material/Table';
 import Button from '@mui/material/Button';
 import Divider from '@mui/material/Divider';
-import Tooltip from '@mui/material/Tooltip';
 import TableRow from '@mui/material/TableRow';
 import Container from '@mui/material/Container';
 import TableBody from '@mui/material/TableBody';
 import TableHead from '@mui/material/TableHead';
 import TableCell from '@mui/material/TableCell';
 import Typography from '@mui/material/Typography';
+import TableFooter from '@mui/material/TableFooter';
 import ListItemText from '@mui/material/ListItemText';
+import TablePagination from '@mui/material/TablePagination';
 
 import { paths } from 'src/routes/paths';
 import { RouterLink } from 'src/routes/components';
@@ -32,6 +32,19 @@ import { CustomBreadcrumbs } from 'src/components/custom-breadcrumbs';
 
 export default function AdminUserDetailsView({ id, data, attendance_list }) {
   const qrRef = useRef();
+  const [page, setPage] = useState(0);
+  const [rowsPerPage, setRowsPerPage] = useState(5);
+
+  const emptyRows = page > 0 ? Math.max(0, (1 + page) * rowsPerPage - attendance_list.length) : 0;
+
+  const handleChangePage = (event, newPage) => {
+    setPage(newPage);
+  };
+
+  const handleChangeRowsPerPage = (event) => {
+    setRowsPerPage(parseInt(event.target.value, 10));
+    setPage(0);
+  };
 
   const handleDownloadQR = () => {
     const svg = qrRef.current?.querySelector('svg');
@@ -203,7 +216,10 @@ export default function AdminUserDetailsView({ id, data, attendance_list }) {
                 </TableHead>
 
                 <TableBody>
-                  {attendance_list.map((row) => (
+                  {(rowsPerPage > 0
+                    ? attendance_list.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                    : attendance_list
+                  ).map((row) => (
                     <TableRow key={row.id}>
                       <TableCell>{fDate(row.check_in_time)}</TableCell>
                       <TableCell>{fTime(row.check_in_time)}</TableCell>
@@ -222,7 +238,25 @@ export default function AdminUserDetailsView({ id, data, attendance_list }) {
                       <TableCell>{row.remarks || '—'}</TableCell>
                     </TableRow>
                   ))}
+                  {emptyRows > 0 && (
+                    <TableRow style={{ height: 53 * emptyRows }}>
+                      <TableCell colSpan={6} />
+                    </TableRow>
+                  )}
                 </TableBody>
+
+                <TableFooter>
+                  <TableRow>
+                    <TablePagination
+                      rowsPerPageOptions={[5, 10, 25, { label: 'All', value: -1 }]}
+                      count={attendance_list.length}
+                      rowsPerPage={rowsPerPage}
+                      page={page}
+                      onPageChange={handleChangePage}
+                      onRowsPerPageChange={handleChangeRowsPerPage}
+                    />
+                  </TableRow>
+                </TableFooter>
               </Table>
             </Scrollbar>
           </Box>

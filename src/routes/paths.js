@@ -1,16 +1,16 @@
 export const paths = {
-  home: "/",
+  home: '/',
   aboutUs: '/about-us',
   auth: {
-    login: "/login"
+    login: '/login',
   },
   attendance: {
-    root: "/attendance",
-    checkIn: "/attendance/check-in",
-    checkOut: "/attendance/check-out",
+    root: '/attendance',
+    checkIn: '/attendance/check-in',
+    checkOut: '/attendance/check-out',
   },
   admin: {
-    root: "/admin",
+    root: '/admin',
     dashboard: '/admin/dashboard',
     attendance: {
       list: '/admin/attendance/list',
@@ -28,15 +28,16 @@ export const paths = {
       list: '/admin/audit-logs/list',
       details: (id) => `/admin/audit-logs/${id}`,
     },
-    account: '/admin/account'
+    account: '/admin/account',
   },
   user: {
-    root: "user",
+    root: '/user',
+    dashboard: '/user/dashboard',
     attendance: {
-      list: 'user/attendance/list',
-      details: (id) => `user/attendance/${id}`,
+      list: '/user/attendance/list',
+      details: (id) => `/user/attendance/${id}`,
     },
-    account: 'user/account'
+    account: 'user/account',
   },
   /**
    * Marketing

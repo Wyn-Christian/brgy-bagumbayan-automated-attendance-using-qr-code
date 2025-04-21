@@ -7,9 +7,11 @@ import SummaryData from '../components/summary-data';
 import AttendanceChart from '../components/attendance-chart';
 import PieUserDepartments from '../components/pie-user-departments';
 
+// ----------------------------------------------------------------------
+
 export default function AdminDashboardView({ summary, attendance, userByDept }) {
   return (
-    <Grid container spacing={1}>
+    <Grid container spacing={3}>
       <Grid size={12}>
         <Typography variant="h3"> Good day!</Typography>
       </Grid>

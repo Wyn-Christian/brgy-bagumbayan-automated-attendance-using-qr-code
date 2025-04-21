@@ -32,7 +32,7 @@ const defaultValues = {
   email: '',
   contact_number: '',
   password: '',
-  confirmPassword: '',
+  confirm_password: '',
   role: 'user',
   department: 'Staff',
 };
@@ -106,7 +106,7 @@ export default function UserForm({ mode = 'create', initialValues }) {
         </CustomCardForm>
 
         <CustomCardForm title="Account Credentials">
-          <Field.Text name="email" label="Email" />
+          <Field.Text type="email" name="email" label="Email" />
           <Field.Phone name="contact_number" label="Phone Number" country="PH" />
 
           {mode === 'edit' && (

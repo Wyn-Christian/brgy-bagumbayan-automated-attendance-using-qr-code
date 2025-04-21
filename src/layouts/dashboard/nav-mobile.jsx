@@ -4,6 +4,8 @@ import { usePathname } from 'next/navigation';
 import Box from '@mui/material/Box';
 import Drawer from '@mui/material/Drawer';
 
+import { paths } from 'src/routes/paths';
+
 import { Logo } from 'src/components/logo';
 
 import Nav from './nav';
@@ -44,7 +46,7 @@ function NavMobile({ open, onClose, role }) {
           display: 'flex',
         }}
       >
-        <Logo />
+        <Logo href={role === 'admin' ? paths.admin.dashboard : paths.user.dashboard} />
       </Box>
 
       <Nav role={role} />

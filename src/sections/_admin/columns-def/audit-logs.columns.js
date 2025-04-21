@@ -1,4 +1,8 @@
 import Box from '@mui/material/Box';
+import Link from '@mui/material/Link';
+
+import { paths } from 'src/routes/paths';
+import { RouterLink } from 'src/routes/components';
 
 import { fDateTime } from 'src/utils/format-time';
 
@@ -12,10 +16,24 @@ export const auditLogColumns = [
     type: 'number',
   },
   {
-    field: 'fullName',
-    headerName: 'User',
-    width: 180,
+    field: 'user.full_name',
+    headerName: 'Full Name',
+    width: 200,
     type: 'string',
+    valueGetter: (row) => row?.user?.full_name,
+    renderCell: (params) => {
+      const userId = params.row?.user?.id;
+      return (
+        <Link
+          component={RouterLink}
+          href={paths.admin.user.details(userId)}
+          underline="hover"
+          color="primary"
+        >
+          {params.row.user.full_name}
+        </Link>
+      );
+    },
   },
   {
     field: 'action',

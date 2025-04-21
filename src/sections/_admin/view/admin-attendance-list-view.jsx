@@ -8,12 +8,12 @@ import { RouterLink } from 'src/routes/components';
 import { Iconify } from 'src/components/iconify';
 import { CustomBreadcrumbs } from 'src/components/custom-breadcrumbs';
 
+import { attendanceColumns } from '../columns-def';
 import CustomDataGrid from '../components/custom-data-grid';
-import { attendanceColumns, mockAttendanceRows } from '../columns-def';
 
 // ----------------------------------------------------------------------
 
-export default function AdminAttendanceListView() {
+export default function AdminAttendanceListView({ data }) {
   return (
     <>
       <CustomBreadcrumbs
@@ -41,7 +41,7 @@ export default function AdminAttendanceListView() {
           </Button>
         }
       />
-      <CustomDataGrid rows={mockAttendanceRows} columns={attendanceColumns} />
+      <CustomDataGrid rows={data} columns={attendanceColumns} />
     </>
   );
 }

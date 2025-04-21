@@ -8,7 +8,7 @@ import { RouterLink } from 'src/routes/components';
 import { Iconify } from 'src/components/iconify';
 import { CustomBreadcrumbs } from 'src/components/custom-breadcrumbs';
 
-import { userColumns, mockUserRows } from '../columns-def';
+import { userColumns } from '../columns-def';
 import CustomDataGrid from '../components/custom-data-grid';
 
 // ----------------------------------------------------------------------
@@ -42,7 +42,7 @@ export default function AdminUserListView({ data = [] }) {
         }
       />
 
-      <CustomDataGrid rows={mockUserRows} columns={userColumns} />
+      <CustomDataGrid rows={data} columns={userColumns} />
     </>
   );
 }

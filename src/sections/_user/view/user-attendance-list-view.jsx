@@ -4,30 +4,31 @@ import { paths } from 'src/routes/paths';
 
 import { CustomBreadcrumbs } from 'src/components/custom-breadcrumbs';
 
-import AttendanceForm from '../forms/attendance-form';
+import CustomDataGrid from 'src/sections/_admin/components/custom-data-grid';
+
+import { attendanceColumns } from '../columns-def';
 
 // ----------------------------------------------------------------------
 
-export default function AdminAttendanceEditView({ id, data }) {
+export default function UserAttendanceListView({ data }) {
   return (
     <>
       <CustomBreadcrumbs
         sx={{ mb: { xs: 3, md: 5 } }}
-        backHref={paths.admin.attendance.details(id)}
-        heading="Edit"
+        heading="Attendance List"
         links={[
           {
             name: 'Dashboard',
-            href: paths.admin.dashboard,
+            href: paths.user.dashboard,
           },
           {
             name: 'Attendance',
-            href: paths.admin.attendance.list,
+            href: paths.user.attendance.list,
           },
-          { name: 'Edit' },
+          { name: 'List' },
         ]}
       />
-      {data && <AttendanceForm mode="edit" initialValues={data} />}
+      <CustomDataGrid rows={data} columns={attendanceColumns} />
     </>
   );
 }

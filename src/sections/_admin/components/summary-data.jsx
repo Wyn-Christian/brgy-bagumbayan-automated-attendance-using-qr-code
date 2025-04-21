@@ -1,31 +1,21 @@
 import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
-import Paper from '@mui/material/Paper';
+import Card from '@mui/material/Card';
 import Typography from '@mui/material/Typography';
 
 import { AnimateCountUp } from 'src/components/animate';
 
 // ----------------------------------------------------------------------
 
-export default function SummaryData({ title, value }) {
+export default function SummaryData({ title, value, unit }) {
   return (
     <Grid size={{ xs: 12, sm: 4 }}>
-      <Paper
-        sx={{
-          position: 'relative',
-          display: 'flex',
-          alignItems: 'center',
-          borderRadius: 2,
-          p: 3,
-          boxShadow: 'var(--customShadows-card)',
-          overflow: 'unset',
-        }}
-      >
+      <Card sx={{ p: 3, overflow: 'unset' }}>
         <Box>
           <Typography variant="subtitle2">{title}</Typography>
-          <AnimateCountUp to={value} sx={(theme) => ({ ...theme.typography.h3 })} />
+          <AnimateCountUp to={value} sx={(theme) => ({ ...theme.typography.h3 })} unit={unit} />
         </Box>
-      </Paper>
+      </Card>
     </Grid>
   );
 }
