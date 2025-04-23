@@ -1,6 +1,5 @@
 'use client';
 
-import { useRouter } from 'next/navigation';
 import { enqueueSnackbar, SnackbarProvider } from 'notistack';
 
 import { paths } from 'src/routes/paths';
@@ -15,8 +14,6 @@ import AttendanceForm from '../forms/attendance-form';
 // ----------------------------------------------------------------------
 
 export default function AdminAttendanceEditView({ id, data }) {
-  const router = useRouter();
-
   const submitHandler = async (formData, setError) => {
     try {
       const userId = formData.user?.id;
@@ -55,8 +52,6 @@ export default function AdminAttendanceEditView({ id, data }) {
         variant: 'success',
         message: 'Attendance updated successfully!',
       });
-
-      router.push(`/admin/attendance/${id}`);
     } catch (error) {
       console.error('Update failed:', error);
       enqueueSnackbar({ variant: 'error', message: 'Something went wrong.' });
@@ -85,7 +80,7 @@ export default function AdminAttendanceEditView({ id, data }) {
       {data?.status === 404 ? (
         <ItemNotFound title="Attendance session not found!" path={paths.admin.attendance.list} />
       ) : (
-        <AttendanceForm mode="edit" initialValues={data} submitHandler={submitHandler}/>
+        <AttendanceForm mode="edit" initialValues={data} submitHandler={submitHandler} />
       )}
     </>
   );
