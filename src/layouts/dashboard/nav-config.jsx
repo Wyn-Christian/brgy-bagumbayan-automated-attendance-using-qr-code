@@ -29,16 +29,16 @@ export const NAV_ADMIN_DATA = [
             path: '/admin/user/create',
             icon: <Iconify icon="line-md:plus-circle" />,
           },
-          {
-            title: 'Edit',
-            path: '/admin/user/123123/edit',
-            icon: <Iconify icon="line-md:edit-twotone" />,
-          },
-          {
-            title: 'Details',
-            path: '/admin/user/123123',
-            icon: <Iconify icon="line-md:text-box" />,
-          },
+          // {
+          //   title: 'Edit',
+          //   path: '/admin/user/123123/edit',
+          //   icon: <Iconify icon="line-md:edit-twotone" />,
+          // },
+          // {
+          //   title: 'Details',
+          //   path: '/admin/user/123123',
+          //   icon: <Iconify icon="line-md:text-box" />,
+          // },
         ],
       },
       {
@@ -56,16 +56,16 @@ export const NAV_ADMIN_DATA = [
             path: '/admin/attendance/create',
             icon: <Iconify icon="line-md:plus-circle" />,
           },
-          {
-            title: 'Edit',
-            path: '/admin/attendance/123123/edit',
-            icon: <Iconify icon="line-md:edit-twotone" />,
-          },
-          {
-            title: 'Details',
-            path: '/admin/attendance/123123',
-            icon: <Iconify icon="line-md:text-box" />,
-          },
+          // {
+          //   title: 'Edit',
+          //   path: '/admin/attendance/123123/edit',
+          //   icon: <Iconify icon="line-md:edit-twotone" />,
+          // },
+          // {
+          //   title: 'Details',
+          //   path: '/admin/attendance/123123',
+          //   icon: <Iconify icon="line-md:text-box" />,
+          // },
         ],
       },
       {

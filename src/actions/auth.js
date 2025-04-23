@@ -33,7 +33,7 @@ export async function login(formData) {
 
     return data?.user;
   } catch (err) {
-    return { error: 'Log in failed', status: 500, message: err.message };
+    return { error: 'Log in failed', status: 500, message: 'Internal Server Error' };
   }
 }
 
