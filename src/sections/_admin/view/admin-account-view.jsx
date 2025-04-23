@@ -26,7 +26,7 @@ export default function AdminAccountView({ data }) {
         ]}
         sx={{ mb: { xs: 3, md: 5 } }}
       />
-      <UserAccountForm initialValues={data} />
+      <UserAccountForm data={data} />
     </>
   );
 }

@@ -1,8 +1,10 @@
 'use client';
 
+import dayjs from 'dayjs';
 import { useForm } from 'react-hook-form';
 import { useBoolean } from 'minimal-shared/hooks';
 import { zodResolver } from '@hookform/resolvers/zod';
+import { enqueueSnackbar, SnackbarProvider } from 'notistack';
 
 import Grid from '@mui/material/Grid';
 import Card from '@mui/material/Card';
@@ -16,6 +18,7 @@ import IconButton from '@mui/material/IconButton';
 import InputAdornment from '@mui/material/InputAdornment';
 import FormControlLabel from '@mui/material/FormControlLabel';
 
+import { updateUserAccount } from 'src/actions/auth';
 import { departments } from 'src/assets/data/departments';
 
 import { Iconify } from 'src/components/iconify';
@@ -25,28 +28,55 @@ import { userSchema } from '../schema';
 
 // ----------------------------------------------------------------------
 
-export default function UserAccountForm({ initialValues }) {
+export default function UserAccountForm({ data }) {
   const showPassword = useBoolean();
   const { value: IsUpdatePassword, setValue: setIsUpdatePassword } = useBoolean(false);
 
   const methods = useForm({
     resolver: zodResolver(userSchema),
-    defaultValues: initialValues,
+    defaultValues: {
+      ...data,
+      department: !data?.department ? '' : data?.department,
+      password: '',
+      confirm_password: '',
+    },
   });
 
   const {
     reset,
     handleSubmit,
-    formState: { isSubmitting },
+    setError,
+    formState: { isSubmitting, errors },
   } = methods;
 
-  const onSubmit = handleSubmit(async (data) => {
+  const onSubmit = handleSubmit(async (formData) => {
     try {
-      console.log('Submitting data:', data);
-      await new Promise((r) => setTimeout(r, 2000));
-      reset();
+      delete formData.confirm_password;
+
+      if (!formData.password) {
+        delete formData.password;
+      }
+
+      formData.birthday = dayjs(formData.birthday).format('YYYY-MM-DD');
+
+      const res = await updateUserAccount(formData);
+
+      if (res?.status === 400) {
+        Object.entries(res.message).forEach(([field, messages]) => {
+          setError(field, {
+            type: 'manual',
+            message: messages[0] || 'Invalid input',
+          });
+        });
+
+        enqueueSnackbar({ variant: 'error', message: 'Validation failed. Please check the form.' });
+        return;
+      }
+
+      enqueueSnackbar({ variant: 'success', message: 'Update successfully!' });
     } catch (error) {
       console.error(error);
+      enqueueSnackbar({ variant: 'error', message: 'Something went wrong.' });
     }
   });
 
@@ -87,12 +117,6 @@ export default function UserAccountForm({ initialValues }) {
         <Grid size={{ xs: 12, sm: 6 }}>
           <Field.Phone name="contact_number" label="Contact Number" />
         </Grid>
-        <Grid size={{ xs: 12, sm: 6 }}>
-          <Field.Text name="last_name" label="Last Name" />
-        </Grid>
-        <Grid size={{ xs: 12, sm: 6 }}>
-          <Field.Text name="first_name" label="First Name" />
-        </Grid>
       </Grid>
     </CustomCard>
   );
@@ -105,6 +129,7 @@ export default function UserAccountForm({ initialValues }) {
       <Grid container rowSpacing={3} columnSpacing={2}>
         <Grid size={{ xs: 12, sm: 6 }}>
           <Field.Select name="department" label="Department">
+            <MenuItem value="">None</MenuItem>
             {departments.map((value) => (
               <MenuItem key={value} value={value}>
                 {value}
@@ -179,6 +204,7 @@ export default function UserAccountForm({ initialValues }) {
 
   return (
     <Form methods={methods} onSubmit={onSubmit}>
+      <SnackbarProvider />
       <Stack spacing={5} sx={{ maxWidth: 720, mx: 'auto' }}>
         {/* Peronsal Information */}
         {renderPersonalInfo()}
@@ -201,12 +227,18 @@ export default function UserAccountForm({ initialValues }) {
         />
         {IsUpdatePassword && renderSecurity()}
 
-        <Stack alignItems="flex-end">
-          <div>
-            <Button type="submit" variant="contained" disabled={isSubmitting}>
-              {isSubmitting ? 'Submitting...' : 'Save Changes'}
-            </Button>
-          </div>
+        <Stack direction="row" justifyContent="flex-end" spacing={2} alignItems="flex-end">
+          <Button
+            color="error"
+            variant="contained"
+            disabled={Object.keys(errors).length === 0}
+            onClick={() => reset()}
+          >
+            Reset
+          </Button>
+          <Button type="submit" variant="contained" disabled={isSubmitting}>
+            {isSubmitting ? 'Submitting...' : 'Save Changes'}
+          </Button>
         </Stack>
       </Stack>
     </Form>

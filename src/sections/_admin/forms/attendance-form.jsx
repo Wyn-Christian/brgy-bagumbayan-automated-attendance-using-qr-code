@@ -1,7 +1,6 @@
 'use client';
 
 import { useForm } from 'react-hook-form';
-import { useState, useEffect } from 'react';
 import { zodResolver } from '@hookform/resolvers/zod';
 
 import Stack from '@mui/material/Stack';
@@ -11,19 +10,16 @@ import MenuItem from '@mui/material/MenuItem';
 import { Form, Field } from 'src/components/hook-form';
 
 import { attendanceSchema } from '../schema';
+import SelectUser from '../components/select-user';
 import CustomCardForm from '../components/custom-card-form';
 
 // ----------------------------------------------------------------------
 
-export default function AttendanceForm({ mode = 'create', initialValues }) {
-  const [options, setOptions] = useState([]);
-  const [inputValue, setInputValue] = useState('');
-  const [loading, setLoading] = useState(false);
-
+export default function AttendanceForm({ mode = 'create', initialValues, submitHandler }) {
   const methods = useForm({
     resolver: zodResolver(attendanceSchema),
     defaultValues: initialValues || {
-      user_id: null,
+      user: null,
       check_in_time: null,
       check_out_time: null,
       source: 'manual',
@@ -34,47 +30,11 @@ export default function AttendanceForm({ mode = 'create', initialValues }) {
   const {
     reset,
     handleSubmit,
+    setError,
     formState: { isSubmitting, errors },
   } = methods;
 
-  const onSubmit = handleSubmit(async (data) => {
-    try {
-      console.log('Submitting attendance:', data);
-      await new Promise((resolve) => setTimeout(resolve, 3000));
-      reset();
-    } catch (error) {
-      console.error(error);
-    }
-  });
-
-  useEffect(() => {
-    if (!inputValue) {
-      setOptions([]); // clear options
-      setLoading(false); // stop loading state
-      return;
-    }
-
-    const timeout = setTimeout(() => {
-      const allUsers = [
-        { id: 1, full_name: 'Jon Snow' },
-        { id: 2, full_name: 'Arya Stark' },
-        { id: 3, full_name: 'Tyrion Lannister' },
-        { id: 4, full_name: 'Daenerys Targaryen' },
-        { id: 5, full_name: 'Cersei Lannister' },
-        { id: 6, full_name: 'Jorah Mormont' },
-      ];
-
-      const filtered = allUsers.filter((user) =>
-        user.full_name.toLowerCase().includes(inputValue.toLowerCase())
-      );
-
-      setOptions(filtered);
-      setLoading(false);
-    }, 500);
-
-    // eslint-disable-next-line consistent-return
-    return () => clearTimeout(timeout);
-  }, [inputValue]);
+  const onSubmit = handleSubmit(async (formData) => await submitHandler(formData, setError));
 
   return (
     <Form methods={methods} onSubmit={onSubmit}>
@@ -86,21 +46,7 @@ export default function AttendanceForm({ mode = 'create', initialValues }) {
         }}
       >
         <CustomCardForm title="Attendance Info" subheader="Fill out the core details">
-          <Field.Autocomplete
-            name="user_id"
-            label="User"
-            placeholder="Search user..."
-            options={options}
-            loading={loading}
-            disabled={loading && inputValue.length === 0}
-            onInputChange={(event, newValue) => {
-              if (typeof newValue === 'string') {
-                setInputValue(newValue);
-              }
-            }}
-            getOptionLabel={(option) => option?.full_name ?? ''}
-            isOptionEqualToValue={(option, value) => option?.id === value?.id}
-          />
+          <SelectUser initialValues={initialValues} />
 
           <Field.MobileDateTimePicker name="check_in_time" label="Check-in Time" />
           <Field.MobileDateTimePicker name="check_out_time" label="Check-out Time (optional)" />
@@ -123,15 +69,14 @@ export default function AttendanceForm({ mode = 'create', initialValues }) {
 
         <Stack direction="row" alignItems="center" justifyContent="flex-end" gap={1}>
           <Button
-            variant="contained"
-            type="submit"
+            variant="outlined"
             color="error"
             disabled={Object.keys(errors).length === 0}
             onClick={() => reset()}
           >
             Reset
           </Button>
-          <Button type="submit" variant="contained">
+          <Button type="submit" variant="contained" disabled={isSubmitting}>
             {isSubmitting
               ? mode === 'edit'
                 ? 'Saving...'

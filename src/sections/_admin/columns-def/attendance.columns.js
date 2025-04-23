@@ -1,5 +1,8 @@
+import dayjs from 'dayjs';
+
 import Box from '@mui/material/Box';
 import Link from '@mui/material/Link';
+import Tooltip from '@mui/material/Tooltip';
 import ListItemText from '@mui/material/ListItemText';
 import { GridActionsCellItem } from '@mui/x-data-grid';
 
@@ -29,14 +32,16 @@ export const attendanceColumns = [
     renderCell: (params) => {
       const userId = params.row?.user?.id;
       return (
-        <Link
-          component={RouterLink}
-          href={paths.admin.user.details(userId)}
-          underline="hover"
-          color="primary"
-        >
-          {params.row.user.full_name}
-        </Link>
+        <Tooltip title={`View ${params.row?.user?.first_name}'s profile`}>
+          <Link
+            component={RouterLink}
+            href={paths.admin.user.details(userId)}
+            underline="hover"
+            color="primary"
+          >
+            {params.row.user.full_name}
+          </Link>
+        </Tooltip>
       );
     },
   },
@@ -67,6 +72,29 @@ export const attendanceColumns = [
         </Box>
       ) : (
         <Label color="warning">Pending</Label>
+      ),
+  },
+  {
+    field: 'total_hours',
+    headerName: 'Total Hours',
+    type: 'number',
+    width: 140,
+    valueGetter: (value, row) => {
+      const checkIn = row?.check_in_time ? dayjs(row?.check_in_time) : null;
+      const checkOut = row?.check_out_time ? dayjs(row?.check_out_time) : null;
+
+      if (!checkIn || !checkOut) return null;
+
+      const hours = checkOut.diff(checkIn, 'minute') / 60;
+      return Number(hours.toFixed(2));
+    },
+    renderCell: (params) =>
+      params.value !== null ? (
+        <Box sx={{ display: 'flex', height: '100%', alignItems: 'center' }}>
+          <ListItemText primary={`${params.value} hr${params.value === 1 ? '' : 's'}`} />
+        </Box>
+      ) : (
+        <Label color="warning">—</Label>
       ),
   },
   {

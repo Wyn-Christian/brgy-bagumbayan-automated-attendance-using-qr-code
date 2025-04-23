@@ -13,7 +13,7 @@ import CustomDataGrid from '../components/custom-data-grid';
 
 // ----------------------------------------------------------------------
 
-export default function AdminAttendanceListView({ data }) {
+export default function AdminAttendanceListView({ data, meta }) {
   return (
     <>
       <CustomBreadcrumbs
@@ -41,7 +41,7 @@ export default function AdminAttendanceListView({ data }) {
           </Button>
         }
       />
-      <CustomDataGrid rows={data} columns={attendanceColumns} />
+      <CustomDataGrid rows={data} columns={attendanceColumns} total={meta?.total} />
     </>
   );
 }

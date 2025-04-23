@@ -1,15 +1,17 @@
-import { HomeLayout } from 'src/layouts/home'
+import { HomeLayout } from 'src/layouts/home';
+
+// ----------------------------------------------------------------------
 
 export default function Layout({ children }) {
-	return (
-		<HomeLayout
-			// slotProps={{
-			// 	header: {
-			// 		sx: { position: { md: 'fixed' } }
-			// 	}
-			// }}
-		>
-			{children}
-		</HomeLayout>
-	)
+  return (
+    <HomeLayout
+    // slotProps={{
+    // 	header: {
+    // 		sx: { position: { md: 'fixed' } }
+    // 	}
+    // }}
+    >
+      {children}
+    </HomeLayout>
+  );
 }

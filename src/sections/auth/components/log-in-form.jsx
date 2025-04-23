@@ -62,6 +62,16 @@ export function LoginForm({ sx, ...other }) {
         Forgot password?
       </Link> */}
       <Button
+        fullWidth
+        color="inherit"
+        size="large"
+        type="submit"
+        variant="contained"
+        loading={isSubmitting}
+      >
+        Login
+      </Button>
+      {/* <Button
         href='/admin/dashboard'
         LinkComponent={RouterLink}
         fullWidth
@@ -84,7 +94,7 @@ export function LoginForm({ sx, ...other }) {
         loading={isSubmitting}
       >
         Login as User
-      </Button>
+      </Button> */}
     </Box>
   );
 }

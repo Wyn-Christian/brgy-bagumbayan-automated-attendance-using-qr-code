@@ -13,7 +13,7 @@ import CustomDataGrid from '../components/custom-data-grid';
 
 // ----------------------------------------------------------------------
 
-export default function AdminUserListView({ data = [] }) {
+export default function AdminUserListView({ data = [], meta }) {
   return (
     <>
       <CustomBreadcrumbs
@@ -42,7 +42,7 @@ export default function AdminUserListView({ data = [] }) {
         }
       />
 
-      <CustomDataGrid rows={data} columns={userColumns} />
+      <CustomDataGrid rows={data} columns={userColumns} total={meta?.total} />
     </>
   );
 }

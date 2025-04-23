@@ -97,7 +97,7 @@ export const NAV_ADMIN_DATA = [
       },
       {
         title: 'Logout',
-        path: '/',
+        path: '/logout',
         icon: <Iconify icon="line-md:logout" />,
       },
     ],
@@ -147,7 +147,7 @@ export const NAV_USER_DATA = [
       },
       {
         title: 'Logout',
-        path: '/',
+        path: '/logout',
         icon: <Iconify icon="line-md:logout" />,
       },
     ],
