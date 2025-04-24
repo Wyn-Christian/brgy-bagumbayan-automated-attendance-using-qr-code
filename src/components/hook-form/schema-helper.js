@@ -129,4 +129,19 @@ export const schemaHelper = {
 
       return data;
     }),
+  optionalDate: (props) =>
+    zod.union([zod.string(), zod.date(), zod.null(), zod.undefined()]).transform((val, ctx) => {
+      if (!val) return undefined;
+
+      const parsed = dayjs(val);
+      if (!parsed.isValid()) {
+        ctx.addIssue({
+          code: zod.ZodIssueCode.invalid_date,
+          message: props?.message?.invalid_type ?? 'Invalid date!',
+        });
+        return undefined;
+      }
+
+      return parsed.toDate();
+    }),
 };

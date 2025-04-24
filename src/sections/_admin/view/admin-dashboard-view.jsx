@@ -9,7 +9,7 @@ import PieUserDepartments from '../components/pie-user-departments';
 
 // ----------------------------------------------------------------------
 
-export default function AdminDashboardView({ summary, attendance, userByDept }) {
+export default function AdminDashboardView({ summary, attendance, user_by_dept }) {
   return (
     <Grid container spacing={3}>
       <Grid size={12}>
@@ -23,13 +23,13 @@ export default function AdminDashboardView({ summary, attendance, userByDept }) 
       <Grid size={{ xs: 12, md: 8 }}>
         <AttendanceChart
           labels={attendance.labels}
-          checkInData={attendance.checkInData}
-          checkOutData={attendance.checkOutData}
+          checkInData={attendance.check_in_data}
+          checkOutData={attendance.check_out_data}
         />
       </Grid>
 
       <Grid size={{ xs: 12, md: 4 }}>
-        <PieUserDepartments data={userByDept} />
+        <PieUserDepartments data={user_by_dept} />
       </Grid>
     </Grid>
   );

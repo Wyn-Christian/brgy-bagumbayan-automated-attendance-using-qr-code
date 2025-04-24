@@ -18,12 +18,6 @@ import { Iconify } from 'src/components/iconify';
 
 export const attendanceColumns = [
   {
-    field: 'id',
-    headerName: 'ID',
-    width: 90,
-    type: 'number',
-  },
-  {
     field: 'user.full_name',
     headerName: 'Full Name',
     width: 200,

@@ -1,5 +1,3 @@
-import dayjs from 'dayjs';
-
 import Link from '@mui/material/Link';
 import { GridActionsCellItem } from '@mui/x-data-grid';
 
@@ -16,8 +14,6 @@ import { Iconify } from 'src/components/iconify';
 // ----------------------------------------------------------------------
 
 export const userColumns = [
-  { field: 'id', headerName: 'ID', width: 70, type: 'number' },
-
   {
     field: 'full_name',
     headerName: 'User',

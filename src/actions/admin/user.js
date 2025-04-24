@@ -48,6 +48,7 @@ export const updateUser = async (formData) => {
   });
 
   revalidateTag('user-list');
+  revalidateTag('admin-dashboard');
   revalidateTag(`user-detail-${formData.id}`);
   return res;
 };

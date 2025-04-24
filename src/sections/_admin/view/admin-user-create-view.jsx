@@ -57,9 +57,7 @@ export default function AdminUserCreateView() {
 
   const onSubmit = handleSubmit(async (data) => {
     try {
-      console.log('data', data);
       const payload = prepareUserPayload(data);
-      console.log('payload', payload);
       const res = await createUser(payload);
 
       if (res?.status === 400) {

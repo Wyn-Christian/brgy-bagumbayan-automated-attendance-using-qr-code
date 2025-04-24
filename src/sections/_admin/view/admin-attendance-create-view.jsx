@@ -28,6 +28,7 @@ export default function AdminAttendanceCreateView() {
         remarks: formData.remarks || null,
       };
 
+
       const res = await createAttendance(payload);
 
       if (res?.status === 400) {

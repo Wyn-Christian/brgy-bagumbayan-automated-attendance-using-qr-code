@@ -27,14 +27,11 @@ export const attendanceSchema = zod
       },
     }),
 
-    check_out_time: schemaHelper.nullableInput(
-      schemaHelper.date({
-        message: {
-          invalid_type: 'Invalid date!',
-        },
-      }),
-      { message: 'Check-out time is required!' }
-    ),
+    check_out_time: schemaHelper.optionalDate({
+      message: {
+        invalid_type: 'Invalid date!',
+      },
+    }),
 
     source: zod.enum(['kiosk', 'manual'], {
       required_error: 'Source is required!',
@@ -100,6 +97,7 @@ export const userSchema = zod
     message: 'Passwords do not match',
     path: ['confirm_password'],
   });
+
 export const userInfoSchema = zod.object({
   id: zod.number(),
   first_name: zod.string().min(1, 'Required'),
