@@ -14,7 +14,7 @@ import { Label } from 'src/components/label/label';
 export const auditLogColumns = [
   {
     field: 'user.full_name',
-    headerName: 'Full Name',
+    headerName: 'User',
     width: 200,
     valueGetter: (row) => row?.user?.full_name,
     renderCell: (params) => {
