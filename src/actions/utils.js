@@ -35,7 +35,6 @@ export async function customFetch(path, options = {}) {
         status: res.status,
         message: error.message,
       });
-      console.log(error.message);
 
       return { ...error, status: res.status };
     }

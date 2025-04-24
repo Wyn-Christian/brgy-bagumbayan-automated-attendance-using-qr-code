@@ -78,11 +78,11 @@ export const NAV_ADMIN_DATA = [
             path: '/admin/audit-logs/list',
             icon: <Iconify icon="line-md:list" />,
           },
-          {
-            title: 'Details',
-            path: '/admin/audit-logs/123123',
-            icon: <Iconify icon="line-md:text-box" />,
-          },
+          // {
+          //   title: 'Details',
+          //   path: '/admin/audit-logs/123123',
+          //   icon: <Iconify icon="line-md:text-box" />,
+          // },
         ],
       },
     ],

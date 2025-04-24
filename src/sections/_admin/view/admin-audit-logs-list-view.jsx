@@ -9,7 +9,7 @@ import CustomDataGrid from '../components/custom-data-grid';
 
 // ----------------------------------------------------------------------
 
-export default function AdminAuditLogsListView({ data }) {
+export default function AdminAuditLogsListView({ data, meta }) {
   return (
     <>
       <CustomBreadcrumbs
@@ -27,7 +27,7 @@ export default function AdminAuditLogsListView({ data }) {
         ]}
         sx={{ mb: { xs: 3, md: 5 } }}
       />
-      <CustomDataGrid rows={data} columns={auditLogColumns} />
+      <CustomDataGrid rows={data} columns={auditLogColumns} total={meta?.total} />
     </>
   );
 }

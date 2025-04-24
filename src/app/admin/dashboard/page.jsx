@@ -12,7 +12,6 @@ export const metadata = { title: `Dashboard | ${CONFIG.appName}` };
 export default async function Page() {
   const dashboard_data = await getAdminDashboardData();
 
-  console.log(dashboard_data);
   return (
     <AdminDashboardView
       summary={dashboard_data?.summary}

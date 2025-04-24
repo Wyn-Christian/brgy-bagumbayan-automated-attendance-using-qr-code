@@ -1,45 +1,42 @@
 import Box from '@mui/material/Box';
 import Link from '@mui/material/Link';
+import Tooltip from '@mui/material/Tooltip';
+import { GridActionsCellItem } from '@mui/x-data-grid'; // or from '@mui/x-data-grid'
 
 import { paths } from 'src/routes/paths';
 import { RouterLink } from 'src/routes/components';
 
 import { fDateTime } from 'src/utils/format-time';
 
+import { Iconify } from 'src/components/iconify';
 import { Label } from 'src/components/label/label';
 
 export const auditLogColumns = [
   {
-    field: 'id',
-    headerName: 'ID',
-    width: 70,
-    type: 'number',
-  },
-  {
     field: 'user.full_name',
     headerName: 'Full Name',
     width: 200,
-    type: 'string',
     valueGetter: (row) => row?.user?.full_name,
     renderCell: (params) => {
       const userId = params.row?.user?.id;
       return (
-        <Link
-          component={RouterLink}
-          href={paths.admin.user.details(userId)}
-          underline="hover"
-          color="primary"
-        >
-          {params.row.user.full_name}
-        </Link>
+        <Tooltip title={`View ${params.row?.user?.first_name}'s profile`}>
+          <Link
+            component={RouterLink}
+            href={paths.admin.user.details(userId)}
+            underline="hover"
+            color="primary"
+          >
+            {params.row.user.full_name}
+          </Link>
+        </Tooltip>
       );
     },
   },
   {
-    field: 'action',
-    headerName: 'Action',
+    field: 'activity',
+    headerName: 'Activity',
     width: 180,
-    type: 'string',
     renderCell: (params) => {
       const value = params.value?.toLowerCase();
       let color = 'default';
@@ -50,26 +47,27 @@ export const auditLogColumns = [
       else if (value?.includes('login')) color = 'success';
       else if (value?.includes('logout')) color = 'secondary';
 
-      return <Label color={color}>{params.value}</Label>;
+      const title = params.value
+        .split('_')
+        .map((word) => word[0].toUpperCase() + word.slice(1))
+        .join(' ');
+      return <Label color={color}>{title}</Label>;
     },
   },
   {
-    field: 'ipAddress',
+    field: 'ip_address',
     headerName: 'IP Address',
     width: 140,
-    type: 'string',
   },
   {
-    field: 'userAgent',
+    field: 'user_agent',
     headerName: 'User Agent',
     width: 220,
-    type: 'string',
   },
   {
-    field: 'metaInfo',
+    field: 'meta_info',
     headerName: 'Meta Info',
     width: 250,
-    type: 'string',
     renderCell: (params) =>
       params.value ? (
         <Box
@@ -94,11 +92,26 @@ export const auditLogColumns = [
       ),
   },
   {
-    field: 'createdAt',
+    field: 'created_at',
     headerName: 'Date & Time',
     width: 180,
-    type: 'dateTime',
     valueGetter: (value) => value && new Date(value),
-    valueFormatter: (value) => value && fDateTime(value),
+    valueFormatter: (value) => fDateTime(value),
   },
+  // {
+  //   field: 'actions',
+  //   type: 'actions',
+  //   headerName: '',
+  //   width: 50,
+  //   getActions: (params) => [
+  //     <GridActionsCellItem
+  //       key="view"
+  //       component={RouterLink}
+  //       href={paths.admin.auditLogs.details(params.row.id)}
+  //       icon={<Iconify icon="line-md:person" />}
+  //       label="View"
+  //       showInMenu
+  //     />,
+  //   ],
+  // },
 ];
