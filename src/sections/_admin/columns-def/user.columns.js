@@ -41,22 +41,6 @@ export const userColumns = [
   },
 
   {
-    field: 'gender',
-    headerName: 'Gender',
-    width: 100,
-    type: 'singleSelect',
-    valueOptions: ['male', 'female'],
-  },
-
-  {
-    field: 'birthday',
-    headerName: 'Birthday',
-    width: 130,
-    type: 'date',
-    valueFormatter: (value) => value && fDate(value),
-  },
-
-  {
     field: 'address',
     headerName: 'Address',
     width: 250,
@@ -99,8 +83,8 @@ export const userColumns = [
   {
     field: 'actions',
     type: 'actions',
-    headerName: 'Actions',
-    width: 100,
+    headerName: '',
+    width: 50,
     getActions: (params) => [
       <GridActionsCellItem
         component={RouterLink}

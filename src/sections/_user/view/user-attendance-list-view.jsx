@@ -10,7 +10,7 @@ import { attendanceColumns } from '../columns-def';
 
 // ----------------------------------------------------------------------
 
-export default function UserAttendanceListView({ data }) {
+export default function UserAttendanceListView({ data, meta }) {
   return (
     <>
       <CustomBreadcrumbs
@@ -28,7 +28,7 @@ export default function UserAttendanceListView({ data }) {
           { name: 'List' },
         ]}
       />
-      <CustomDataGrid rows={data} columns={attendanceColumns} />
+      <CustomDataGrid rows={data} columns={attendanceColumns} total={meta?.total} />
     </>
   );
 }

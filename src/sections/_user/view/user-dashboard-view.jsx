@@ -30,7 +30,7 @@ import SummaryData from 'src/sections/_admin/components/summary-data';
 
 // ----------------------------------------------------------------------
 
-export default function UserDashboardView({ user, recentAttendanceData }) {
+export default function UserDashboardView({ user, summary, recent_attendance }) {
   const qrRef = useRef();
 
   const getGreeting = () => {
@@ -93,7 +93,7 @@ export default function UserDashboardView({ user, recentAttendanceData }) {
               </TableRow>
             </TableHead>
             <TableBody>
-              {recentAttendanceData.map((row) => (
+              {recent_attendance.map((row) => (
                 <TableRow key={row.id}>
                   <TableCell>{fDate(row.check_in_time)}</TableCell>
                   <TableCell>{fTime(row.check_in_time)}</TableCell>
@@ -110,6 +110,26 @@ export default function UserDashboardView({ user, recentAttendanceData }) {
                 </TableRow>
               ))}
             </TableBody>
+            {!recent_attendance.length && (
+              <TableRow>
+                <TableCell colSpan={4} align="center">
+                  <Stack spacing={1} alignItems="center" justifyContent="center" py={3}>
+                    <Iconify
+                      icon="mdi:calendar-remove"
+                      width={32}
+                      height={32}
+                      color="text.secondary"
+                    />
+                    <Typography variant="body2" color="text.secondary">
+                      No attendance records yet.
+                    </Typography>
+                    <Typography variant="caption" color="text.disabled">
+                      This user hasn’t recorded any attendance recently.
+                    </Typography>
+                  </Stack>
+                </TableCell>
+              </TableRow>
+            )}
           </Table>
         </Scrollbar>
         <Divider />
@@ -144,16 +164,16 @@ export default function UserDashboardView({ user, recentAttendanceData }) {
 
   return (
     <>
-      <Typography variant="h4" mb={3}>{`${getGreeting()}, kabayang user!`}</Typography>
+      <Typography variant="h4" mb={3}>{`${getGreeting()}, ${user.first_name}!`}</Typography>
       <Grid container spacing={3}>
-        <SummaryData title="Total Present (month)" value={12} />
-        <SummaryData title="Total Hours (month)" value={12} />
+        <SummaryData title="Total Present (this month)" value={summary?.total_present || 0} />
+        <SummaryData title="Total Hours (this month)" value={summary?.total_hours || 0} unit="hrs" />
 
         <Grid size={{ xs: 12, sm: 4 }}>
           <Card sx={{ p: 3 }}>
             <div>
               <Typography variant="subtitle2">Avg. Check-In Time</Typography>
-              <Typography variant="h3">08:23 am</Typography>
+              <Typography variant="h3">{summary?.avg_check_in_time || '--:--'}</Typography>
             </div>
           </Card>
         </Grid>

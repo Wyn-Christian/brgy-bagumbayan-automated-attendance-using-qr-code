@@ -111,8 +111,8 @@ export const attendanceColumns = [
   {
     field: 'actions',
     type: 'actions',
-    headerName: 'Actions',
-    width: 100,
+    headerName: '',
+    width: 50,
     getActions: (params) => [
       <GridActionsCellItem
         component={RouterLink}

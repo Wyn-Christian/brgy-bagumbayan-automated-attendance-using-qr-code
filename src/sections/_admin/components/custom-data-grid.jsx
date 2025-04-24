@@ -4,7 +4,9 @@ import { useState, useEffect } from 'react';
 import { useRouter, usePathname, useSearchParams } from 'next/navigation';
 
 import Box from '@mui/material/Box';
+import Stack from '@mui/material/Stack';
 import Paper from '@mui/material/Paper';
+import Typography from '@mui/material/Typography';
 import {
   GridToolbarExport,
   GridToolbarContainer,
@@ -24,6 +26,8 @@ export default function CustomDataGrid({ rows = [], columns = [], total = 0 }) {
   const { replace } = useRouter();
 
   useEffect(() => {
+    if (!total) return;
+
     const params = new URLSearchParams(searchParams);
     const currentPage = parseInt(params.get('page') || '1', 10);
     const currentLimit = parseInt(params.get('limit') || '25', 10);
@@ -36,7 +40,18 @@ export default function CustomDataGrid({ rows = [], columns = [], total = 0 }) {
     params.set('page', paginationModel.page + 1);
     params.set('limit', paginationModel.pageSize);
     replace(`${pathname}?${params.toString()}`);
-  }, [paginationModel, pathname, replace, searchParams]);
+  }, [paginationModel, pathname, replace, searchParams, total]);
+
+  const CustomNoRowsOverlay = () => (
+    <Stack height="100%" alignItems="center" justifyContent="center" sx={{ p: 3 }}>
+      <Typography variant="body2" color="text.secondary">
+        No data available.
+      </Typography>
+      <Typography variant="caption" color="text.disabled">
+        Try adjusting your filters or check back later.
+      </Typography>
+    </Stack>
+  );
 
   return (
     <Paper
@@ -63,7 +78,7 @@ export default function CustomDataGrid({ rows = [], columns = [], total = 0 }) {
         rows={rows}
         rowCount={total}
         columns={columns}
-        slots={{ toolbar: CustomToolbar }}
+        slots={{ toolbar: CustomToolbar, noRowsOverlay: CustomNoRowsOverlay }}
         paginationMode="server"
       />
     </Paper>

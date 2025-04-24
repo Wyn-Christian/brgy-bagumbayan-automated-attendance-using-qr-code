@@ -24,8 +24,6 @@ import ItemNotFound from 'src/components/item-not-found/item-not-found';
 export default function AdminAttendanceDetailsView({ id, data }) {
   const { user, check_in_time, check_out_time, source, remarks, created_at, updated_at } = data;
 
-  console.log(check_in_time);
-
   const RenderDetails = () => (
     <Container maxWidth="md">
       <Stack gap={3}>

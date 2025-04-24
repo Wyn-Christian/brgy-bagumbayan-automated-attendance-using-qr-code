@@ -41,3 +41,36 @@ export const userSchema = zod
     message: 'Old password is required to set a new password',
     path: ['old_password'],
   });
+
+export const userInfoSchema = zod.object({
+  id: zod.number(),
+  first_name: zod.string().min(1, 'Required'),
+  middle_name: zod.string().optional(),
+  last_name: zod.string().min(1, 'Required'),
+  gender: zod.enum(['male', 'female']),
+  birthday: zod.coerce.date(),
+  address: zod.string().optional(),
+});
+
+export const roleDeptSchema = zod.object({
+  id: zod.number(),
+  role: zod.enum(['admin', 'user']),
+  department: zod.string().optional(),
+});
+
+export const credentialsSchema = zod.object({
+  id: zod.number(),
+  email: zod.string().email(),
+  contact_number: zod.string().min(10),
+});
+
+export const passwordSchema = zod
+  .object({
+    id: zod.number(),
+    password: zod.string().min(6),
+    confirm_password: zod.string().min(6),
+  })
+  .refine((data) => data.password === data.confirm_password, {
+    message: "Passwords don't match",
+    path: ['confirm_password'],
+  });

@@ -34,7 +34,11 @@ export const getAttendanceList = async (searchParams) => {
     return res;
   } catch (err) {
     console.log(err);
-    return { error: 'Failed to fetch attendance list' };
+    return {
+      error: 'Failed to fetch attendance list',
+      status: 500,
+      message: 'Internal Server Error',
+    };
   }
 };
 
@@ -49,7 +53,11 @@ export const getUserAttendanceList = async (userId, searchParams) => {
     return res;
   } catch (err) {
     console.log(err);
-    return { error: 'Failed to fetch attendance list' };
+    return {
+      error: 'Failed to fetch attendance list',
+      status: 500,
+      message: 'Internal Server Error',
+    };
   }
 };
 
@@ -62,7 +70,11 @@ export const getAttendanceDetail = async (id) => {
     return res;
   } catch (err) {
     console.log(err);
-    return { error: 'Failed to fetch attendance detail' };
+    return {
+      error: 'Failed to fetch attendance list',
+      status: 500,
+      message: 'Internal Server Error',
+    };
   }
 };
 

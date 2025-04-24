@@ -128,11 +128,11 @@ export const NAV_USER_DATA = [
             path: '/user/attendance/list',
             icon: <Iconify icon="line-md:list" />,
           },
-          {
-            title: 'Details',
-            path: '/user/attendance/123123',
-            icon: <Iconify icon="line-md:text-box" />,
-          },
+          // {
+          //   title: 'Details',
+          //   path: '/user/attendance/123123',
+          //   icon: <Iconify icon="line-md:text-box" />,
+          // },
         ],
       },
     ],
