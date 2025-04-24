@@ -42,9 +42,6 @@ export function AttendanceCheckInView() {
       };
       const result = await checkIn(payload);
 
-      console.log('-----------------------------------------------------');
-      console.log(result);
-
       // handle backend 400 / validation error
       if (result?.status >= 400 && typeof result.message === 'object') {
         reset();

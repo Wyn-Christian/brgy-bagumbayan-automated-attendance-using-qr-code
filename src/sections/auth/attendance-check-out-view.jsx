@@ -1,13 +1,17 @@
 'use client';
 
+import dayjs from 'dayjs';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
+import { enqueueSnackbar, SnackbarProvider } from 'notistack';
 
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 
 import { paths } from 'src/routes/paths';
 import { RouterLink } from 'src/routes/components';
+
+import { checkOut } from 'src/actions/attendance';
 
 import { Form } from 'src/components/hook-form';
 
@@ -27,22 +31,64 @@ export function AttendanceCheckOutView() {
     defaultValues,
   });
 
-  const { reset, handleSubmit } = methods;
+  const { reset, handleSubmit, setError } = methods;
 
   const onSubmit = handleSubmit(async (data) => {
     try {
-      await new Promise((resolve) => setTimeout(resolve, 500));
+      const payload = {
+        qr_code: data.qr_code,
+        time: dayjs().format('YYYY-MM-DDTHH:mm:ss'),
+      };
+      const result = await checkOut(payload);
 
-      console.info('DATA', data);
+      // handle backend 400 / validation error
+      if (result?.status >= 400 && typeof result.message === 'object') {
+        reset();
+
+        Object.entries(result.message).forEach(([field, messages]) => {
+          setError(field, {
+            type: 'manual',
+            message: Array.isArray(messages) ? messages[0] : messages || 'Invalid input',
+          });
+        });
+
+        enqueueSnackbar({
+          variant: 'error',
+          message: 'Please fix the highlighted errors.',
+        });
+
+        return;
+      }
+
+      if (result?.error) {
+        reset();
+
+        setError('qr_code', {
+          type: 'manual',
+          message: result?.message,
+        });
+
+        return;
+      }
+
+      enqueueSnackbar({
+        variant: 'success',
+        message: 'Check-out successful!',
+      });
 
       reset();
     } catch (error) {
-      console.error(error);
+      console.error('Unexpected error during check-in:', error);
+      enqueueSnackbar({
+        variant: 'error',
+        message: 'Something went wrong. Please try again.',
+      });
     }
   });
 
   return (
     <>
+      <SnackbarProvider />
       <FormHead title="Attendance Check Out" description="Please scan your QR code..." />
 
       <Form methods={methods} onSubmit={onSubmit}>
