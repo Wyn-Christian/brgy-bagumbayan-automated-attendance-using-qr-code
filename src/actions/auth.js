@@ -86,3 +86,9 @@ export const updateUserAccount = async (formData) => {
 
   return data;
 };
+
+export async function verifyQrCode(qr_code) {
+  return await customFetch(`/auth/qr-code/${qr_code}`, {
+    method: 'POST',
+  });
+}
