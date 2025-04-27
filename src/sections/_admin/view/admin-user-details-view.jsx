@@ -16,8 +16,11 @@ import { RouterLink } from 'src/routes/components';
 
 import { fDate, fDateTime } from 'src/utils/format-time';
 
+import { deleteUser } from 'src/actions/admin/user';
+
 import { Label } from 'src/components/label';
 import { Iconify } from 'src/components/iconify';
+import DeleteButton from 'src/components/delete-button/delete-button';
 import { CustomBreadcrumbs } from 'src/components/custom-breadcrumbs';
 import ItemNotFound from 'src/components/item-not-found/item-not-found';
 import { UserAttendanceTable } from 'src/components/user-attendance-table';
@@ -166,13 +169,13 @@ export default function AdminUserDetailsView({ id, data, attendance_page }) {
         heading="User Details"
         action={
           <Stack direction="row" spacing={1}>
-            <Button
-              startIcon={<Iconify icon="line-md:person-remove" />}
-              variant="outlined"
-              color="error"
-            >
-              Delete
-            </Button>
+            <DeleteButton
+              icon="line-md:person-remove"
+              title={`Are you sure you want to delete ${full_name}?`}
+              content="This action cannot be undone. Deleting this user will permanently remove their account, QR code, and attendance records."
+              action={() => deleteUser(id)}
+              path={paths.admin.user.list}
+            />
             <Button
               LinkComponent={RouterLink}
               href={paths.admin.user.edit(id)}

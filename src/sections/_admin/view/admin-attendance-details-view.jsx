@@ -14,9 +14,12 @@ import { RouterLink } from 'src/routes/components';
 
 import { fDate, fTime, fDateTime } from 'src/utils/format-time';
 
+import { deleteAttendance } from 'src/actions/admin/attendance';
+
 import { Label } from 'src/components/label';
 import { Iconify } from 'src/components/iconify';
 import { CustomBreadcrumbs } from 'src/components/custom-breadcrumbs';
+import DeleteButton from 'src/components/delete-button/delete-button';
 import ItemNotFound from 'src/components/item-not-found/item-not-found';
 
 // ----------------------------------------------------------------------
@@ -102,13 +105,14 @@ export default function AdminAttendanceDetailsView({ id, data }) {
         heading="Attendance Details"
         action={
           <Stack direction="row" spacing={1}>
-            <Button
-              startIcon={<Iconify icon="line-md:folder-remove" />}
-              variant="outlined"
-              color="error"
-            >
-              Delete
-            </Button>
+            <DeleteButton
+              icon="line-md:folder-remove"
+              title="Are you sure you want to delete this attendance session?"
+              content="This action will remove the attendance record permanently."
+              action={() => deleteAttendance(id)}
+              path={paths.admin.attendance.list}
+            />
+
             <Button
               LinkComponent={RouterLink}
               href={paths.admin.attendance.edit(id)}

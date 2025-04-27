@@ -24,12 +24,12 @@ export const attendanceColumns = [
     type: 'string',
     valueGetter: (row) => row?.user?.full_name,
     renderCell: (params) => {
-      const userId = params.row?.user?.id;
+      const attendanceId = params.row?.id;
       return (
-        <Tooltip title={`View ${params.row?.user?.first_name}'s profile`}>
+        <Tooltip title={`View ${params.row?.user?.first_name}'s attendance details`}>
           <Link
             component={RouterLink}
-            href={paths.admin.user.details(userId)}
+            href={paths.admin.attendance.details(attendanceId)}
             underline="hover"
             color="primary"
           >
