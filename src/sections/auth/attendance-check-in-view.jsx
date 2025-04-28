@@ -146,6 +146,7 @@ export function AttendanceCheckInView() {
       </Box>
 
       <FormReturnLink href={paths.home} label="Return to home" />
+      test
     </>
   );
 }
