@@ -71,7 +71,7 @@ export function AttendanceCheckOutView() {
 
     try {
       const res = await fetch(
-        `${process.env.NEXT_PUBLIC_BACKEND_URL}/attendance-sessions/check-out`,
+        `https://brgy-bagumbayan-automated-attend-production.up.railway.app/api/attendance-sessions/check-out`,
         {
           method: 'POST',
           body: formData,

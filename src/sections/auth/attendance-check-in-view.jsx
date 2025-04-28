@@ -73,7 +73,7 @@ export function AttendanceCheckInView() {
 
     try {
       const res = await fetch(
-        `${process.env.NEXT_PUBLIC_BACKEND_URL}/attendance-sessions/check-in`,
+        `https://brgy-bagumbayan-automated-attend-production.up.railway.app/api/attendance-sessions/check-in`,
         {
           method: 'POST',
           body: formData,
@@ -121,7 +121,6 @@ export function AttendanceCheckInView() {
     <>
       <SnackbarProvider />
       <FormHead title="Attendance Check In" description="Please scan your QR code..." />
-
       <Form methods={methods} onSubmit={onSubmit}>
         <QRScanForm />
 
@@ -134,7 +133,6 @@ export function AttendanceCheckInView() {
           }}
         />
       </Form>
-
       <FormDivider label="Other options" />
       <Box sx={{ gap: 1.5, display: 'flex', justifyContent: 'center' }}>
         <Button component={RouterLink} href={paths.auth.login} variant="outlined">
@@ -144,7 +142,6 @@ export function AttendanceCheckInView() {
           Check Out
         </Button>
       </Box>
-
       <FormReturnLink href={paths.home} label="Return to home" />
       test
     </>
