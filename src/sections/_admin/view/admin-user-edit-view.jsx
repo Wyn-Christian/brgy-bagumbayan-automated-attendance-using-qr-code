@@ -13,6 +13,7 @@ import { Field } from 'src/components/hook-form';
 import { CustomBreadcrumbs } from 'src/components/custom-breadcrumbs';
 import ItemNotFound from 'src/components/item-not-found/item-not-found';
 
+import UpdateFaceForm from '../forms/update-face-form';
 import UserFormSection from '../forms/user-form-section';
 import CustomCardForm from '../components/custom-card-form';
 import { passwordSchema, roleDeptSchema, userInfoSchema, credentialsSchema } from '../schema';
@@ -67,6 +68,12 @@ export default function AdminUserEditView({ id, data }) {
     </CustomCardForm>
   );
 
+  const renderFaceUpdate = () => (
+    <CustomCardForm title="Update Face Photo" subheader="Capture or upload a new face photo.">
+      <UpdateFaceForm userId={id} userData={data} />
+    </CustomCardForm>
+  );
+
   const renderCredentials = () => (
     <CustomCardForm title="Account Credentials" subheader="Login information.">
       <UserFormSection schema={credentialsSchema} defaultValues={data}>
@@ -115,6 +122,9 @@ export default function AdminUserEditView({ id, data }) {
 
           {/* Update Password Form */}
           {renderPasswordUpdate()}
+
+          {/* Face Registration */}
+          {renderFaceUpdate()}
         </Stack>
       </div>
     </>

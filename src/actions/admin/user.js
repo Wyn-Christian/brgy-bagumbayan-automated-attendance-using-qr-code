@@ -9,8 +9,8 @@ import { customFetch } from '../utils';
 export const createUser = async (formData) => {
   const res = await customFetch('/users', {
     method: 'POST',
-    body: JSON.stringify(formData),
-    next: { tags: ['user-list'] },
+    body: formData,
+    credentials: 'include',
   });
 
   revalidateTag('user-list');
@@ -41,15 +41,15 @@ export const getUserList = async (searchParams) => {
 };
 
 export const updateUser = async (formData) => {
-  const res = await customFetch(`/users/${formData.id}`, {
+  const res = await customFetch(`/users/${formData.get('id')}`, {
     method: 'PATCH',
-    body: JSON.stringify(formData),
-    next: { tags: ['user-list', `user-detail-${formData.id}`] },
+    body: formData,
+    credentials: 'include',
   });
 
   revalidateTag('user-list');
   revalidateTag('admin-dashboard');
-  revalidateTag(`user-detail-${formData.id}`);
+  revalidateTag(`user-detail-${formData.get('id')}`);
   return res;
 };
 

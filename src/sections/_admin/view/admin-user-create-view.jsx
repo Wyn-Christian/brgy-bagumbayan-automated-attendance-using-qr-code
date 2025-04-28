@@ -18,6 +18,7 @@ import { departments } from 'src/assets/data/departments';
 
 import { Form, Field } from 'src/components/hook-form';
 import { CustomBreadcrumbs } from 'src/components/custom-breadcrumbs';
+import { FaceCaptureSection } from 'src/components/face-recognition-camera';
 
 import { userSchema } from '../schema';
 import CustomCardForm from '../components/custom-card-form';
@@ -37,6 +38,7 @@ const defaultValues = {
   department: 'Staff',
   password: '',
   confirm_password: '',
+  face: null,
 };
 
 // ----------------------------------------------------------------------
@@ -58,7 +60,21 @@ export default function AdminUserCreateView() {
   const onSubmit = handleSubmit(async (data) => {
     try {
       const payload = prepareUserPayload(data);
-      const res = await createUser(payload);
+      console.log(data);
+      // Create FormData
+      const formData = new FormData();
+
+      Object.entries(payload).forEach(([key, value]) => {
+        if (value !== undefined && value !== null) {
+          formData.append(key, value);
+        }
+      });
+
+      if (data.face) {
+        formData.append('face', data.face);
+      }
+
+      const res = await createUser(formData);
 
       if (res?.status === 400) {
         Object.entries(res.message).forEach(([field, messages]) => {
@@ -67,7 +83,6 @@ export default function AdminUserCreateView() {
             message: messages[0] || 'Invalid input',
           });
         });
-
         enqueueSnackbar({
           variant: 'error',
           message: 'Validation failed. Please check the form.',
@@ -82,7 +97,6 @@ export default function AdminUserCreateView() {
       enqueueSnackbar('Something went wrong.', { variant: 'error' });
     }
   });
-
   const renderUserInfo = () => (
     <CustomCardForm title="User Info" subheader="Fill out the basic user details.">
       <Field.Text name="first_name" label="First Name" />
@@ -158,6 +172,9 @@ export default function AdminUserCreateView() {
 
           {/* Update Password Form */}
           {renderPassword()}
+
+          {/* Face Capture Section */}
+          <FaceCaptureSection name="face" />
 
           <Stack direction="row" justifyContent="flex-end">
             <Button type="submit" variant="contained" disabled={isSubmitting}>
