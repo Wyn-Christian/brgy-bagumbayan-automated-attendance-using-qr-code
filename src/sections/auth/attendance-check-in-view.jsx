@@ -73,8 +73,8 @@ export function AttendanceCheckInView() {
 
     try {
       const res = await fetch(
-        // `https://brgy-bagumbayan-automated-attend-production.up.railway.app/api/attendance-sessions/check-in`,
-        `${process.env.NEXT_PUBLIC_BACKEND_URL}/attendance-sessions/check-in`,
+        `https://brgy-bagumbayan-automated-attend-production.up.railway.app/api/attendance-sessions/check-in`,
+        // `${process.env.NEXT_PUBLIC_BACKEND_URL}/attendance-sessions/check-in`,
         {
           method: 'POST',
           body: formData,
