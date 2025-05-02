@@ -32,8 +32,8 @@ export function AttendanceCheckInView() {
 
   const methods = useForm({
     resolver: zodResolver(QRCodeSchema),
-    // defaultValues: { qr_code: '' },
-    defaultValues: { qr_code: '88baa5fc-9195-47b3-9cea-c4f117a3b02e' },
+    defaultValues: { qr_code: '' },
+    // defaultValues: { qr_code: '88baa5fc-9195-47b3-9cea-c4f117a3b02e' },
   });
 
   const { reset, handleSubmit, setError } = methods;
