@@ -5,7 +5,7 @@ export const uploadFace = async (file) => {
   formData.append('face', file);
 
   try {
-    const res = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/face/upload`, {
+    const res = await fetch(`${process.env.BACKEND_URL}/face/upload`, {
       method: 'POST',
       body: formData,
       credentials: 'include',

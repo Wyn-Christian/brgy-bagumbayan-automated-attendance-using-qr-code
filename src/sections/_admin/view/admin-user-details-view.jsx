@@ -1,15 +1,18 @@
 'use client';
 
-import { useRef } from 'react';
 import QRCode from 'react-qr-code';
+import { useRef, useState } from 'react';
 
 import Box from '@mui/material/Box';
 import Stack from '@mui/material/Stack';
+import Dialog from '@mui/material/Dialog';
 import Button from '@mui/material/Button';
 import Divider from '@mui/material/Divider';
 import Container from '@mui/material/Container';
 import Typography from '@mui/material/Typography';
 import ListItemText from '@mui/material/ListItemText';
+import DialogContent from '@mui/material/DialogContent';
+import DialogActions from '@mui/material/DialogActions';
 
 import { paths } from 'src/routes/paths';
 import { RouterLink } from 'src/routes/components';
@@ -18,6 +21,7 @@ import { fDate, fDateTime } from 'src/utils/format-time';
 
 import { deleteUser } from 'src/actions/admin/user';
 
+import { Image } from 'src/components/image';
 import { Label } from 'src/components/label';
 import { Iconify } from 'src/components/iconify';
 import DeleteButton from 'src/components/delete-button/delete-button';
@@ -28,6 +32,7 @@ import { UserAttendanceTable } from 'src/components/user-attendance-table';
 // ----------------------------------------------------------------------
 
 export default function AdminUserDetailsView({ id, data, attendance_page }) {
+  const [openDialog, setOpenDialog] = useState(false);
   const qrRef = useRef();
 
   const handleDownloadQR = () => {
@@ -82,6 +87,7 @@ export default function AdminUserDetailsView({ id, data, attendance_page }) {
     contact_number,
     qr_code,
     is_active,
+    face_image_path,
     created_at,
     updated_at,
   } = data;
@@ -113,25 +119,61 @@ export default function AdminUserDetailsView({ id, data, attendance_page }) {
 
         <Divider flexItem />
 
-        <Stack spacing={1}>
-          <Typography variant="subtitle2">QR Image</Typography>
+        <Stack
+          spacing={2}
+          direction={{ xs: 'column', md: 'row' }}
+          justifyContent="space-around"
+          alignItems={{ xs: 'center', md: 'flex-start' }}
+        >
+          <Stack spacing={1}>
+            <Typography variant="subtitle2" textAlign={{ xs: 'start', md: 'center' }}>
+              QR Image
+            </Typography>
 
-          <Box ref={qrRef} sx={{ maxWidth: { xs: 128, md: 256 }, mx: 'auto' }}>
-            <QRCode
-              id="qr-code"
-              style={{ height: 'auto', width: '100%' }}
-              size={512}
-              value={qr_code}
-            />
-          </Box>
-          <Button
-            variant="outlined"
-            onClick={handleDownloadQR}
-            startIcon={<Iconify icon="line-md:download-loop" />}
-            sx={{ mt: 1, mx: 'auto', width: 'fit-content' }}
-          >
-            Download QR
-          </Button>
+            <Box ref={qrRef} sx={{ maxWidth: { xs: 128, md: 256 } }}>
+              <QRCode
+                id="qr-code"
+                style={{ height: 'auto', width: '100%' }}
+                size={512}
+                value={qr_code}
+              />
+            </Box>
+            <Button
+              variant="outlined"
+              onClick={handleDownloadQR}
+              startIcon={<Iconify icon="line-md:download-loop" />}
+              sx={{ mt: 1, mx: 'auto', width: 'fit-content' }}
+            >
+              Download QR
+            </Button>
+          </Stack>
+          <Stack spacing={1}>
+            <Typography variant="subtitle2" textAlign={{ xs: 'start', md: 'center' }}>
+              Face Image
+            </Typography>
+            <Button
+              onClick={() => setOpenDialog(true)}
+              sx={{
+                p: 0,
+                borderRadius: 2,
+                overflow: 'hidden',
+                width: { xs: 128, md: 256 },
+                height: { xs: 128, md: 256 },
+                minWidth: 0,
+              }}
+            >
+              <Image
+                src={face_image_path}
+                alt="Face Preview"
+                ratio="1/1"
+                sx={{
+                  borderRadius: 2,
+                  width: '100%',
+                  height: '100%',
+                }}
+              />
+            </Button>
+          </Stack>
         </Stack>
 
         <Divider flexItem />
@@ -159,6 +201,22 @@ export default function AdminUserDetailsView({ id, data, attendance_page }) {
 
         <UserAttendanceTable userId={id} data={attendance_page.data} meta={attendance_page.meta} />
       </Stack>
+
+      <Dialog open={openDialog} onClose={() => setOpenDialog(false)} maxWidth="lg" fullWidth>
+        <DialogContent sx={{ px: 2, pt: 2 }}>
+          <Image
+            src={face_image_path}
+            alt="Full Face Preview"
+            sx={{
+              width: '100%',
+              borderRadius: 2,
+            }}
+          />
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={() => setOpenDialog(false)}>Close</Button>
+        </DialogActions>
+      </Dialog>
     </Container>
   );
 

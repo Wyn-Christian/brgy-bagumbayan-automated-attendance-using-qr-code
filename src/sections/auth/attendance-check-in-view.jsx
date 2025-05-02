@@ -32,8 +32,8 @@ export function AttendanceCheckInView() {
 
   const methods = useForm({
     resolver: zodResolver(QRCodeSchema),
-    defaultValues: { qr_code: '' },
-    // defaultValues: { qr_code: '88baa5fc-9195-47b3-9cea-c4f117a3b02e' },
+    // defaultValues: { qr_code: '' },
+    defaultValues: { qr_code: '88baa5fc-9195-47b3-9cea-c4f117a3b02e' },
   });
 
   const { reset, handleSubmit, setError } = methods;
@@ -73,7 +73,8 @@ export function AttendanceCheckInView() {
 
     try {
       const res = await fetch(
-        `https://brgy-bagumbayan-automated-attend-production.up.railway.app/api/attendance-sessions/check-in`,
+        // `https://brgy-bagumbayan-automated-attend-production.up.railway.app/api/attendance-sessions/check-in`,
+        `${process.env.NEXT_PUBLIC_BACKEND_URL}/attendance-sessions/check-in`,
         {
           method: 'POST',
           body: formData,
@@ -96,7 +97,7 @@ export function AttendanceCheckInView() {
 
       enqueueSnackbar({
         variant: 'success',
-        message: 'Check-in Test successful!',
+        message: 'Check-in successful!',
       });
 
       reset();
@@ -143,7 +144,6 @@ export function AttendanceCheckInView() {
         </Button>
       </Box>
       <FormReturnLink href={paths.home} label="Return to home" />
-      test
     </>
   );
 }

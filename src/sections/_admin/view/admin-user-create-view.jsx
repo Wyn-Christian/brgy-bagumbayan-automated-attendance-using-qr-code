@@ -91,7 +91,8 @@ export default function AdminUserCreateView() {
       }
 
       enqueueSnackbar('User created successfully!', { variant: 'success' });
-      router.push(paths.admin.user.details(res.result.id));
+      console.log('res?.result', res?.result);
+      router.push(paths.admin.user.details(res?.result?.id));
     } catch (err) {
       console.error(err);
       enqueueSnackbar('Something went wrong.', { variant: 'error' });
