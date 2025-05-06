@@ -33,7 +33,7 @@ export default function HomeSystemProcess() {
           {
             icon: 'material-symbols:qr-code-2',
             title: 'Scan on Kiosk',
-            desc: 'Scan code on the terminal during check-in and check-out.',
+            desc: 'Scan code on the terminal during time-in and time-out.',
           },
           {
             icon: 'material-symbols:photo-camera-front-outline',

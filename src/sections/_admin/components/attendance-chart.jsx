@@ -17,7 +17,7 @@ export default function AttendanceChart({ labels, checkInData, checkOutData }) {
         borderRadius: 2,
       }}
     >
-      <CardHeader title="Check-In / Check-Out - Last 10 Days" sx={{ px: 3, pt: 3, pb: 0 }} />
+      <CardHeader title="Time-In / Time-Out - Last 10 Days" sx={{ px: 3, pt: 3, pb: 0 }} />
       <Box
         sx={{
           width: '100%',
@@ -32,8 +32,8 @@ export default function AttendanceChart({ labels, checkInData, checkOutData }) {
         <BarChart
           xAxis={[{ scaleType: 'band', data: labels, label: 'Date' }]}
           series={[
-            { data: checkInData, label: 'Check in', stack: isXs ? 'stack' : undefined },
-            { data: checkOutData, label: 'Check out', stack: isXs ? 'stack' : undefined },
+            { data: checkInData, label: 'Time in', stack: isXs ? 'stack' : undefined },
+            { data: checkOutData, label: 'Time out', stack: isXs ? 'stack' : undefined },
           ]}
           sx={{ height: '100%' }}
           borderRadius={4}

@@ -25,7 +25,7 @@ export const attendanceSchema = zod
 
     check_in_time: schemaHelper.date({
       message: {
-        required: 'Check-in time is required!',
+        required: 'Time-in is required!',
         invalid_type: 'Invalid date!',
       },
     }),
@@ -49,7 +49,7 @@ export const attendanceSchema = zod
       return !fIsAfter(data.check_in_time, data.check_out_time);
     },
     {
-      message: 'Check-out time cannot be earlier than check-in time!',
+      message: 'Time-out cannot be earlier than time-in!',
       path: ['check_out_time'],
     }
   )

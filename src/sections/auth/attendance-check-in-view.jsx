@@ -121,7 +121,7 @@ export function AttendanceCheckInView() {
   return (
     <>
       <SnackbarProvider />
-      <FormHead title="Attendance Check In" description="Please scan your QR code..." />
+      <FormHead title="Attendance Time In" description="Please scan your QR code..." />
       <Form methods={methods} onSubmit={onSubmit}>
         <QRScanForm />
 
@@ -140,7 +140,7 @@ export function AttendanceCheckInView() {
           Login
         </Button>
         <Button component={RouterLink} href={paths.attendance.checkOut} variant="outlined">
-          Check Out
+          Time Out
         </Button>
       </Box>
       <FormReturnLink href={paths.home} label="Return to home" />

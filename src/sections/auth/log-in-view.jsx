@@ -59,10 +59,10 @@ export function LoginView() {
 
         <Box sx={{ gap: 1.5, display: 'flex', justifyContent: 'center' }}>
           <Button component={RouterLink} href={paths.attendance.checkIn} variant="outlined">
-            Check In
+            Time In
           </Button>
           <Button component={RouterLink} href={paths.attendance.checkOut} variant="outlined">
-            Check Out
+            Time Out
           </Button>
         </Box>
       </Box>

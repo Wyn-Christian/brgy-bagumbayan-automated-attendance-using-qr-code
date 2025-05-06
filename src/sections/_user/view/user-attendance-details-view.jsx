@@ -47,12 +47,12 @@ export default function UserAttendanceDetailsView({ id, data }) {
             gap={3}
           >
             <Stack spacing={1}>
-              <Typography variant="subtitle1">Check-in Time</Typography>
+              <Typography variant="subtitle1">Time-in</Typography>
               <ListItemText primary={fDate(check_in_time)} secondary={fTime(check_in_time)} />
             </Stack>
 
             <Stack spacing={1}>
-              <Typography variant="subtitle1">Check-out Time</Typography>
+              <Typography variant="subtitle1">Time-out</Typography>
               {check_out_time ? (
                 <ListItemText primary={fDate(check_out_time)} secondary={fTime(check_out_time)} />
               ) : (

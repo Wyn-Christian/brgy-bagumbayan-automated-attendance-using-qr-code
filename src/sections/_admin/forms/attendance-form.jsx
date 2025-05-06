@@ -48,8 +48,8 @@ export default function AttendanceForm({ mode = 'create', initialValues, submitH
         <CustomCardForm title="Attendance Info" subheader="Fill out the core details">
           <SelectUser initialValues={initialValues} />
 
-          <Field.MobileDateTimePicker name="check_in_time" label="Check-in Time" />
-          <Field.MobileDateTimePicker name="check_out_time" label="Check-out Time (optional)" />
+          <Field.MobileDateTimePicker name="check_in_time" label="Time-in" />
+          <Field.MobileDateTimePicker name="check_out_time" label="Time-out (optional)" />
         </CustomCardForm>
 
         <CustomCardForm title="Extra Details" subheader="Optional remarks and source">

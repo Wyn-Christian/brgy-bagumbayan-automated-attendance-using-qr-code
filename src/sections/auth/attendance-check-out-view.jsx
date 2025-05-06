@@ -83,7 +83,7 @@ export function AttendanceCheckOutView() {
       if (!res.ok) {
         enqueueSnackbar({
           variant: 'error',
-          message: result?.error || 'Check-out failed',
+          message: result?.error || 'Time-out failed',
         });
         setCapturedImage(null);
         reset();
@@ -93,14 +93,14 @@ export function AttendanceCheckOutView() {
 
       enqueueSnackbar({
         variant: 'success',
-        message: 'Check-out successful!',
+        message: 'Time-out successful!',
       });
 
       reset();
       setIsQrCodeVerified(false);
       setCapturedImage(null);
     } catch (err) {
-      console.error('Error during check-out:', err);
+      console.error('Error during Time-out:', err);
       enqueueSnackbar({
         variant: 'error',
         message: 'Something went wrong. Please try again.',
@@ -117,7 +117,7 @@ export function AttendanceCheckOutView() {
   return (
     <>
       <SnackbarProvider />
-      <FormHead title="Attendance Check Out" description="Please scan your QR code..." />
+      <FormHead title="Attendance Time Out" description="Please scan your QR code..." />
 
       <Form methods={methods} onSubmit={onSubmit}>
         <QRScanForm />
@@ -136,7 +136,7 @@ export function AttendanceCheckOutView() {
 
       <Box sx={{ gap: 1.5, display: 'flex', justifyContent: 'center' }}>
         <Button component={RouterLink} href={paths.attendance.checkIn} variant="outlined">
-          Check In
+          Time In
         </Button>
         <Button component={RouterLink} href={paths.auth.login} variant="outlined">
           Login

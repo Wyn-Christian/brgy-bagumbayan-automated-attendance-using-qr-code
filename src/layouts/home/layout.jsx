@@ -38,8 +38,8 @@ export const NAV_HOME_DATA_DESKTOP = [
 		icon: <Iconify icon="line-md:folder" />,
 		path: '/attendance',
 		children: [
-			{ title: 'Check in', path: '/attendance/check-in' },
-			{ title: 'Check out', path: '/attendance/check-out' },
+			{ title: 'Time in', path: '/attendance/check-in' },
+			{ title: 'Time out', path: '/attendance/check-out' },
 		],
 	},
 ];

@@ -4,7 +4,7 @@ import { AttendanceCheckOutView } from 'src/sections/auth/attendance-check-out-v
 
 // ----------------------------------------------------------------------
 
-export const metadata = { title: `Check Out - ${CONFIG.appName}` };
+export const metadata = { title: `Time Out - ${CONFIG.appName}` };
 
 export default function Page() {
 	return <AttendanceCheckOutView />

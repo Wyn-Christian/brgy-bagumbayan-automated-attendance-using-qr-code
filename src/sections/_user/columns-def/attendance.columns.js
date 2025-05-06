@@ -26,7 +26,7 @@ export const attendanceColumns = [
   },
   {
     field: 'check_in_time',
-    headerName: 'Check-in Time',
+    headerName: 'Time-in',
     type: 'dateTime',
     width: 200,
     valueGetter: (value) => value && new Date(value),
@@ -34,7 +34,7 @@ export const attendanceColumns = [
   },
   {
     field: 'check_out_time',
-    headerName: 'Check-out Time',
+    headerName: 'Time-out',
     type: 'dateTime',
     width: 200,
     valueGetter: (value) => value && new Date(value),

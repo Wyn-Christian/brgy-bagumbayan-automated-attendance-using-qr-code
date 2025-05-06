@@ -75,7 +75,7 @@ export default function HomeHero() {
                   color="primary"
                   size="large"
                 >
-                  Check In
+                  Time In
                 </Button>
                 <Button
                   LinkComponent={RouterLink}
@@ -84,7 +84,7 @@ export default function HomeHero() {
                   color="primary"
                   size="large"
                 >
-                  Check Out
+                  Time Out
                 </Button>
               </Stack>
 

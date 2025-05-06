@@ -87,8 +87,8 @@ export default function UserDashboardView({ user, summary, recent_attendance }) 
             <TableHead>
               <TableRow>
                 <TableCell sx={{ minWidth: 130 }}>Date</TableCell>
-                <TableCell sx={{ minWidth: 130 }}>Check-in</TableCell>
-                <TableCell sx={{ minWidth: 130 }}>Check-out</TableCell>
+                <TableCell sx={{ minWidth: 130 }}>Time-in</TableCell>
+                <TableCell sx={{ minWidth: 130 }}>Time-out</TableCell>
                 <TableCell sx={{ minWidth: 130 }}>Source</TableCell>
               </TableRow>
             </TableHead>
@@ -167,12 +167,16 @@ export default function UserDashboardView({ user, summary, recent_attendance }) 
       <Typography variant="h4" mb={3}>{`${getGreeting()}, ${user.first_name}!`}</Typography>
       <Grid container spacing={3}>
         <SummaryData title="Total Present (this month)" value={summary?.total_present || 0} />
-        <SummaryData title="Total Hours (this month)" value={summary?.total_hours || 0} unit="hrs" />
+        <SummaryData
+          title="Total Hours (this month)"
+          value={summary?.total_hours || 0}
+          unit="hrs"
+        />
 
         <Grid size={{ xs: 12, sm: 4 }}>
           <Card sx={{ p: 3 }}>
             <div>
-              <Typography variant="subtitle2">Avg. Check-In Time</Typography>
+              <Typography variant="subtitle2">Avg. Time-in</Typography>
               <Typography variant="h3">{summary?.avg_check_in_time || '--:--'}</Typography>
             </div>
           </Card>

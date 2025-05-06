@@ -4,7 +4,7 @@ import { AttendanceCheckInView } from 'src/sections/auth/attendance-check-in-vie
 
 // ----------------------------------------------------------------------
 
-export const metadata = { title: `Check In - ${CONFIG.appName}` };
+export const metadata = { title: `Time In - ${CONFIG.appName}` };
 
 export default function Page() {
 	return <AttendanceCheckInView />

@@ -112,8 +112,8 @@ export function UserAttendanceTable({ userId }) {
           <TableHead>
             <TableRow>
               <TableCell sx={{ minWidth: 130 }}>Date</TableCell>
-              <TableCell sx={{ minWidth: 130 }}>Check-in</TableCell>
-              <TableCell sx={{ minWidth: 130 }}>Check-out</TableCell>
+              <TableCell sx={{ minWidth: 130 }}>Time-in</TableCell>
+              <TableCell sx={{ minWidth: 130 }}>Time-out</TableCell>
               <TableCell sx={{ minWidth: 120 }}>Total Hours</TableCell>
               <TableCell>Source</TableCell>
               <TableCell sx={{ minWidth: 250 }}>Remarks</TableCell>
