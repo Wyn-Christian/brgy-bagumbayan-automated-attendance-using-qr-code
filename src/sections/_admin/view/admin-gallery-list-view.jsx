@@ -36,7 +36,7 @@ export default function AdminGalleryListView({ data = [] }) {
         heading="Face Image Gallery"
         links={[
           { name: 'Dashboard', href: paths.admin.dashboard },
-          { name: 'Gallery', href: paths.admin.attendance.list }, // You might want to change this to paths.admin.gallery.list
+          { name: 'Gallery', href: paths.admin.gallery.list },
           { name: 'List' },
         ]}
         sx={{ mb: { xs: 3, md: 5 } }}
