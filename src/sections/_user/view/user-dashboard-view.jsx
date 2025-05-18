@@ -1,7 +1,7 @@
 'use client';
 
+import { useRef } from 'react';
 import QRCode from 'react-qr-code';
-import { useRef, useState } from 'react';
 
 import Box from '@mui/material/Box';
 import Card from '@mui/material/Card';

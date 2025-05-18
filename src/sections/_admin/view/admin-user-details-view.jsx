@@ -21,9 +21,9 @@ import { fDate, fDateTime } from 'src/utils/format-time';
 
 import { deleteUser } from 'src/actions/admin/user';
 
-import { Image } from 'src/components/image';
 import { Label } from 'src/components/label';
 import { Iconify } from 'src/components/iconify';
+import { Image as CustomImage } from 'src/components/image';
 import DeleteButton from 'src/components/delete-button/delete-button';
 import { CustomBreadcrumbs } from 'src/components/custom-breadcrumbs';
 import ItemNotFound from 'src/components/item-not-found/item-not-found';
@@ -162,7 +162,7 @@ export default function AdminUserDetailsView({ id, data, attendance_page }) {
                 minWidth: 0,
               }}
             >
-              <Image
+              <CustomImage
                 src={face_image_path}
                 alt="Face Preview"
                 ratio="1/1"
@@ -204,7 +204,7 @@ export default function AdminUserDetailsView({ id, data, attendance_page }) {
 
       <Dialog open={openDialog} onClose={() => setOpenDialog(false)} maxWidth="lg" fullWidth>
         <DialogContent sx={{ px: 2, pt: 2 }}>
-          <Image
+          <CustomImage
             src={face_image_path}
             alt="Full Face Preview"
             sx={{
