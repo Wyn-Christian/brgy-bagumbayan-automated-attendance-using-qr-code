@@ -25,6 +25,14 @@ export const getUserDetails = async (id) => {
   return res;
 };
 
+export const getUserSummaryDetails = async (id) => {
+  const res = await customFetch(`/users/${id}/summary`, {
+    next: { tags: [`user-detail-${id}`], revalidate: 30 },
+  });
+
+  return res;
+};
+
 export const getUserList = async (searchParams) => {
   let params = new URLSearchParams(await searchParams);
 

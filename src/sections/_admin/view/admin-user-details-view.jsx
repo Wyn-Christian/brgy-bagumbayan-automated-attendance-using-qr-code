@@ -4,6 +4,8 @@ import QRCode from 'react-qr-code';
 import { useRef, useState } from 'react';
 
 import Box from '@mui/material/Box';
+import Grid from '@mui/material/Grid';
+import Card from '@mui/material/Card';
 import Stack from '@mui/material/Stack';
 import Dialog from '@mui/material/Dialog';
 import Button from '@mui/material/Button';
@@ -29,9 +31,11 @@ import { CustomBreadcrumbs } from 'src/components/custom-breadcrumbs';
 import ItemNotFound from 'src/components/item-not-found/item-not-found';
 import { UserAttendanceTable } from 'src/components/user-attendance-table';
 
+import SummaryData from '../components/summary-data';
+
 // ----------------------------------------------------------------------
 
-export default function AdminUserDetailsView({ id, data, attendance_page }) {
+export default function AdminUserDetailsView({ id, summary, data, attendance_page }) {
   const [openDialog, setOpenDialog] = useState(false);
   const qrRef = useRef();
 
@@ -91,6 +95,8 @@ export default function AdminUserDetailsView({ id, data, attendance_page }) {
     created_at,
     updated_at,
   } = data;
+
+  const { total_present, total_hours, avg_check_in_time } = summary;
 
   const RenderDetails = () => (
     <Container maxWidth="md">
@@ -198,6 +204,20 @@ export default function AdminUserDetailsView({ id, data, attendance_page }) {
         </Stack>
 
         <Divider flexItem />
+
+        <Grid container spacing={3}>
+          <SummaryData title="Total Present (this month)" value={total_present || 0} />
+          <SummaryData title="Total Hours (this month)" value={total_hours || 0} unit="hrs" />
+
+          <Grid size={{ xs: 12, sm: 4 }}>
+            <Card sx={{ p: 3 }}>
+              <div>
+                <Typography variant="subtitle2">Avg. Time-in</Typography>
+                <Typography variant="h3">{avg_check_in_time || '--:--'}</Typography>
+              </div>
+            </Card>
+          </Grid>
+        </Grid>
 
         <UserAttendanceTable userId={id} data={attendance_page.data} meta={attendance_page.meta} />
       </Stack>
