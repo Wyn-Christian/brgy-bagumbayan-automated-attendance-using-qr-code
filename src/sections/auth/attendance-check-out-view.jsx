@@ -68,6 +68,7 @@ export function AttendanceCheckOutView() {
     formData.append('qr_code', data.qr_code);
     formData.append('time', dayjs().format('YYYY-MM-DDTHH:mm:ss'));
     formData.append('face', capturedImage);
+    formData.append('source', 'kiosk');
 
     try {
       const res = await fetch(
