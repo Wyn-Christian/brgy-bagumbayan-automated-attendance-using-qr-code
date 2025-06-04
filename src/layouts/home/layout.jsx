@@ -9,11 +9,12 @@ import { Logo } from 'src/components/logo';
 import { Iconify } from 'src/components/iconify';
 import { NavBasicMobile, NavBasicDesktop } from 'src/components/nav-basic';
 
+import Footer from './footer';
 import { MainSection } from '../core/main-section';
 import { HeaderSection } from '../core/header-section';
 import { LayoutSection } from '../core/layout-section';
 import { MenuButton } from '../components/menu-button';
-import Footer from './footer';
+
 
 // ----------------------------------------------------------------------
 
