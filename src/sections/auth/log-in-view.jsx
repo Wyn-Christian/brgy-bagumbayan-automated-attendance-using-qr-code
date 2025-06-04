@@ -58,11 +58,8 @@ export function LoginView() {
         <FormDivider label="Are you just checking in/out?" />
 
         <Box sx={{ gap: 1.5, display: 'flex', justifyContent: 'center' }}>
-          <Button component={RouterLink} href={paths.attendance.checkIn} variant="outlined">
-            Time In
-          </Button>
-          <Button component={RouterLink} href={paths.attendance.checkOut} variant="outlined">
-            Time Out
+          <Button component={RouterLink} href={paths.attendance.root} variant="outlined">
+            Log Attendance
           </Button>
         </Box>
       </Box>

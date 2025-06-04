@@ -18,7 +18,7 @@ const SIZE_DELTA_THRESHOLD = 15;
 const MIN_FACE_WIDTH_RATIO = 0.25;
 const MAX_FACE_WIDTH_RATIO = 0.35;
 
-export function FaceRecognitionCamera({ open, onClose, onCapture }) {
+export function FaceRecognitionCamera({ open, onClose, onCancel, onCapture }) {
   const videoRef = useRef(null);
   const canvasRef = useRef(null);
   const faceDetectorRef = useRef(null);
@@ -198,7 +198,7 @@ export function FaceRecognitionCamera({ open, onClose, onCapture }) {
         </Box>
       </DialogContent>
       <DialogActions>
-        <Button onClick={onClose}>Cancel</Button>
+        <Button onClick={onCancel}>Cancel</Button>
         <Button onClick={capture} variant="contained" color="primary">
           Manual Capture
         </Button>

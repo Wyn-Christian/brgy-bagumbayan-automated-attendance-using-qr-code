@@ -9,7 +9,6 @@ import { themeConfig } from './theme-config';
 import { components } from './core/components';
 import { typography } from './core/typography';
 import { customShadows } from './core/custom-shadows';
-import { updateCoreWithSettings, updateComponentsWithSettings } from './with-settings';
 
 // ----------------------------------------------------------------------
 
@@ -35,12 +34,12 @@ export const baseTheme = {
   defaultColorScheme: themeConfig.defaultMode,
 };
 
-export function createTheme({ settingsState, themeOverrides = {} } = {}) {
+export function createTheme({ themeOverrides = {} } = {}) {
   // Update core theme settings
-  const updatedCore = settingsState ? updateCoreWithSettings(baseTheme, settingsState) : baseTheme;
+  const updatedCore = baseTheme;
 
   // Update component settings
-  const updatedComponents = settingsState ? updateComponentsWithSettings(settingsState) : {};
+  const updatedComponents = {};
 
   // Create and return the final theme
   const theme = createMuiTheme(updatedCore, updatedComponents, themeOverrides);

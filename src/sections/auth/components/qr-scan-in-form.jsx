@@ -92,17 +92,17 @@ export function QRScanForm() {
       />
 
       {errors?.qr_code && (
-        <Typography variant="subtitle1" color="error" align="center">
+        <Typography variant="h5" color="error" align="center">
           {errors.qr_code.message}
         </Typography>
       )}
-      <Typography variant="h6" align="center">
+      <Typography variant="h3" align="center">
         {!qrValue && 'Waiting for QR scan...'}
         {qrValue && !isSubmitting && 'Analyzing...'}
         {isSubmitting && 'Submitting...'}
       </Typography>
 
-      <Typography variant="caption" color="warning.main">
+      <Typography variant="subtitle1" color="warning.main">
         Click here if the scanner doesn&rsquo;t start
       </Typography>
     </Box>
