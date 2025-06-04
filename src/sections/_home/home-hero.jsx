@@ -70,21 +70,12 @@ export default function HomeHero() {
               <Stack direction={{ xs: 'column', sm: 'row' }} spacing={2}>
                 <Button
                   LinkComponent={RouterLink}
-                  href={paths.attendance.checkIn}
+                  href={paths.attendance.root}
                   variant="contained"
                   color="primary"
                   size="large"
                 >
-                  Time In
-                </Button>
-                <Button
-                  LinkComponent={RouterLink}
-                  href={paths.attendance.checkOut}
-                  variant="outlined"
-                  color="primary"
-                  size="large"
-                >
-                  Time Out
+                  Time In / Out
                 </Button>
               </Stack>
 
