@@ -4,7 +4,6 @@ import dayjs from 'dayjs';
 import { useForm } from 'react-hook-form';
 import { useState, useEffect } from 'react';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { enqueueSnackbar, SnackbarProvider } from 'notistack';
 
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
@@ -94,12 +93,26 @@ export function AttendanceLogView() {
         return;
       }
 
-      // enqueueSnackbar({
-      //   variant: 'success',
-      //   message: result?.message,
-      // });
+      const { message, session } = result;
 
-      setSuccessMessage(result?.message || 'Attendance logged successfully.');
+      let extraInfo = '';
+
+      if (session?.check_in_time && !session?.check_out_time) {
+        const checkIn = dayjs(session.check_in_time);
+        extraInfo = ` at ${checkIn.format('h:mm A')} on ${checkIn.format('MMMM D, YYYY')}.`;
+      }
+
+      if (session?.check_out_time) {
+        const checkOut = dayjs(session.check_out_time);
+        const checkIn = dayjs(session.check_in_time);
+        const diff = dayjs.duration(checkOut.diff(checkIn));
+        const hours = diff.hours();
+        const minutes = diff.minutes();
+
+        extraInfo = ` at ${checkOut.format('h:mm A')} on ${checkOut.format('MMMM D, YYYY')}. You worked for ${hours} hour${hours !== 1 ? 's' : ''} ${minutes} minute${minutes !== 1 ? 's' : ''}.`;
+      }
+
+      setSuccessMessage(`${message}${extraInfo}`);
       setErrorMessage('');
       reset();
       setIsQrCodeVerified(false);
@@ -118,7 +131,6 @@ export function AttendanceLogView() {
 
   return (
     <>
-      <SnackbarProvider />
       <FormHead title="Time In / Out" description="Scan your QR code to record your attendance." />
 
       {errorMessage && (
