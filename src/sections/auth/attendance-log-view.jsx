@@ -22,6 +22,8 @@ import { QRCodeSchema } from './components/schema';
 import { FormDivider } from './components/form-divider';
 import { QRScanForm } from './components/qr-scan-in-form';
 import { FormReturnLink } from './components/form-return-link';
+import { Typography } from '@mui/material';
+import { Logo } from 'src/components/logo';
 
 // ----------------------------------------------------------------------
 
@@ -72,8 +74,8 @@ export function AttendanceLogView() {
 
     try {
       const res = await fetch(
-        // `https://brgy-bagumbayan-automated-attend-production.up.railway.app/api/attendance-sessions/log`,
-        `http://127.0.0.1:5000/api/attendance-sessions/log`,
+        `https://brgy-bagumbayan-automated-attend-production.up.railway.app/api/attendance-sessions/log`,
+        // `http://127.0.0.1:5000/api/attendance-sessions/log`,
         {
           method: 'POST',
           body: formData,
@@ -120,6 +122,12 @@ export function AttendanceLogView() {
     <>
       <SnackbarProvider />
       <FormHead title="Time In / Out" description="Scan your QR code to record your attendance." />
+
+      <Box sx={{ textAlign: 'center', mb: 4 }}>
+        <Typography variant="h4" color="error">
+          Error title
+        </Typography>
+      </Box>
 
       <Form methods={methods} onSubmit={onSubmit}>
         <QRScanForm />
