@@ -8,6 +8,7 @@ import { enqueueSnackbar, SnackbarProvider } from 'notistack';
 
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
+import Typography from '@mui/material/Typography';
 
 import { paths } from 'src/routes/paths';
 import { RouterLink } from 'src/routes/components';
@@ -22,8 +23,6 @@ import { QRCodeSchema } from './components/schema';
 import { FormDivider } from './components/form-divider';
 import { QRScanForm } from './components/qr-scan-in-form';
 import { FormReturnLink } from './components/form-return-link';
-import { Typography } from '@mui/material';
-import { Logo } from 'src/components/logo';
 
 // ----------------------------------------------------------------------
 
@@ -31,6 +30,9 @@ export function AttendanceLogView() {
   const [isQrCodeVerified, setIsQrCodeVerified] = useState(false);
   const [showFaceDialog, setShowFaceDialog] = useState(false);
   const [capturedImage, setCapturedImage] = useState(null);
+
+  const [errorMessage, setErrorMessage] = useState('');
+  const [successMessage, setSuccessMessage] = useState('');
 
   const methods = useForm({
     resolver: zodResolver(QRCodeSchema),
@@ -41,6 +43,8 @@ export function AttendanceLogView() {
   const { reset, handleSubmit, setError } = methods;
 
   const onSubmit = handleSubmit(async (data) => {
+    setErrorMessage('');
+
     if (!isQrCodeVerified) {
       const result = await verifyQrCode(data.qr_code);
 
@@ -50,6 +54,7 @@ export function AttendanceLogView() {
           type: 'manual',
           message: result?.message,
         });
+        setErrorMessage(result?.message);
         return;
       }
 
@@ -59,10 +64,7 @@ export function AttendanceLogView() {
     }
 
     if (!data.qr_code || !capturedImage) {
-      enqueueSnackbar({
-        variant: 'error',
-        message: 'Missing QR code or face image.',
-      });
+      setErrorMessage('Missing QR code or face image.');
       return;
     }
 
@@ -85,30 +87,26 @@ export function AttendanceLogView() {
       const result = await res.json();
 
       if (!res.ok) {
-        enqueueSnackbar({
-          variant: 'error',
-          message: result?.error || 'Logging attendance failed',
-        });
+        setErrorMessage(result?.error || 'Logging attendance failed.');
         setCapturedImage(null);
         reset();
         setIsQrCodeVerified(false);
         return;
       }
 
-      enqueueSnackbar({
-        variant: 'success',
-        message: result?.message,
-      });
+      // enqueueSnackbar({
+      //   variant: 'success',
+      //   message: result?.message,
+      // });
 
+      setSuccessMessage(result?.message || 'Attendance logged successfully.');
+      setErrorMessage('');
       reset();
       setIsQrCodeVerified(false);
       setCapturedImage(null);
     } catch (err) {
       console.error('Error during logging attendance:', err);
-      enqueueSnackbar({
-        variant: 'error',
-        message: 'Something went wrong. Please try again.',
-      });
+      setErrorMessage('Something went wrong. Please try again.');
     }
   });
 
@@ -123,11 +121,21 @@ export function AttendanceLogView() {
       <SnackbarProvider />
       <FormHead title="Time In / Out" description="Scan your QR code to record your attendance." />
 
-      <Box sx={{ textAlign: 'center', mb: 4 }}>
-        <Typography variant="h4" color="error">
-          Error title
-        </Typography>
-      </Box>
+      {errorMessage && (
+        <Box sx={{ textAlign: 'center', mb: 5 }}>
+          <Typography variant="h3" color="error">
+            {errorMessage}
+          </Typography>
+        </Box>
+      )}
+
+      {successMessage && (
+        <Box sx={{ textAlign: 'center', mb: 5 }}>
+          <Typography variant="h3" color="success.main">
+            {successMessage}
+          </Typography>
+        </Box>
+      )}
 
       <Form methods={methods} onSubmit={onSubmit}>
         <QRScanForm />
