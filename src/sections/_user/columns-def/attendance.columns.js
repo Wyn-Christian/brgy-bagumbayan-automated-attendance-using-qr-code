@@ -43,6 +43,34 @@ export const attendanceColumns = [
       params.value ? fTime(params.value) : <Label color="warning">Pending</Label>,
   },
   {
+    field: 'total_hours',
+    headerName: 'Total Hours',
+    type: 'number',
+    width: 140,
+    valueGetter: (value, row) => {
+      const checkIn = row?.check_in_time ? dayjs(row?.check_in_time) : null;
+      const checkOut = row?.check_out_time ? dayjs(row?.check_out_time) : null;
+
+      if (!checkIn || !checkOut) return null;
+
+      // Calculate total minutes
+      const totalMinutes = checkOut.diff(checkIn, 'minute');
+      return totalMinutes; // return minutes instead of hours
+    },
+    renderCell: (params) =>
+      params.value !== null ? (
+        <Box sx={{ display: 'flex', height: '100%', alignItems: 'center' }}>
+          {(() => {
+            const hours = Math.floor(params.value / 60);
+            const minutes = params.value % 60;
+            return <ListItemText primary={`${hours} hrs ${minutes} mins`} />;
+          })()}
+        </Box>
+      ) : (
+        <Label color="warning">—</Label>
+      ),
+  },
+  {
     field: 'source',
     headerName: 'Source',
     width: 120,

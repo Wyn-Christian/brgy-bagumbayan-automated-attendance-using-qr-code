@@ -16,6 +16,7 @@ import TableCell from '@mui/material/TableCell';
 import TableHead from '@mui/material/TableHead';
 import CardHeader from '@mui/material/CardHeader';
 import Typography from '@mui/material/Typography';
+import ListItemText from '@mui/material/ListItemText';
 
 import { paths } from 'src/routes/paths';
 import { RouterLink } from 'src/routes/components';
@@ -89,6 +90,7 @@ export default function UserDashboardView({ user, summary, recent_attendance }) 
                 <TableCell sx={{ minWidth: 130 }}>Date</TableCell>
                 <TableCell sx={{ minWidth: 130 }}>Time-in</TableCell>
                 <TableCell sx={{ minWidth: 130 }}>Time-out</TableCell>
+                <TableCell sx={{ minWidth: 130 }}>Total time</TableCell>
                 <TableCell sx={{ minWidth: 130 }}>Source</TableCell>
               </TableRow>
             </TableHead>
@@ -102,6 +104,17 @@ export default function UserDashboardView({ user, summary, recent_attendance }) 
                       fTime(row.check_out_time)
                     ) : (
                       <Label color="warning">Pending</Label>
+                    )}
+                  </TableCell>
+                  <TableCell>
+                    {row.check_out_time !== null ? (
+                      <Box sx={{ display: 'flex', height: '100%', alignItems: 'center' }}>
+                        <ListItemText
+                          primary={`${row?.total_hours} hrs ${row?.total_minutes % 60} mins`}
+                        />
+                      </Box>
+                    ) : (
+                      <Label color="warning">—</Label>
                     )}
                   </TableCell>
                   <TableCell>
@@ -164,7 +177,10 @@ export default function UserDashboardView({ user, summary, recent_attendance }) 
 
   return (
     <>
-      <Typography variant="h4" mb={3}>{`${getGreeting()}, ${user.first_name}!`}</Typography>
+      <Stack direction={{ md: 'column', sm: 'row' }} justifyContent="space-between" mb={3}>
+        <Typography variant="h4">{`${getGreeting()}, ${user.full_name}!`}</Typography>
+        {user?.department && <Typography variant="h6">{`${user.department}`}</Typography>}
+      </Stack>
       <Grid container spacing={3}>
         <SummaryData title="Total Present (this month)" value={summary?.total_present || 0} />
         <SummaryData

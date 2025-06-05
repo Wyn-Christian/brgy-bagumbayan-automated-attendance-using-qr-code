@@ -79,18 +79,24 @@ export const attendanceColumns = [
 
       if (!checkIn || !checkOut) return null;
 
-      const hours = checkOut.diff(checkIn, 'minute') / 60;
-      return Number(hours.toFixed(2));
+      // Calculate total minutes
+      const totalMinutes = checkOut.diff(checkIn, 'minute');
+      return totalMinutes; // return minutes instead of hours
     },
-    renderCell: (params) =>
-      params.value !== null ? (
+    renderCell: ({ value, row }) =>
+      value !== null ? (
         <Box sx={{ display: 'flex', height: '100%', alignItems: 'center' }}>
-          <ListItemText primary={`${params.value} hr${params.value === 1 ? '' : 's'}`} />
+          {(() => {
+            const hours = Math.floor(value / 60);
+            const minutes = value % 60;
+            return <ListItemText primary={`${row?.total_hours} hrs ${row?.total_minutes} mins`} />;
+          })()}
         </Box>
       ) : (
         <Label color="warning">—</Label>
       ),
   },
+
   {
     field: 'source',
     headerName: 'Source',
